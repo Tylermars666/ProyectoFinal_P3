@@ -1,12 +1,13 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Destino {
 
-    String nombre;
-    String ciudad;
-    String[] imagenes = new String[]
-    String clima;
+    private String nombre;
+    private String ciudad;
+    private ArrayList<String> imagenes;
+    private String clima;
 
 }
