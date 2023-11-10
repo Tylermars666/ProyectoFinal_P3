@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyecto_viajes;
+package co.edu.uniquindio.proyecto_viajes.client.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
