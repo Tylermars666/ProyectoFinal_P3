@@ -1,10 +1,8 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
 
-import javafx.scene.shape.StrokeLineCap;
-
 import java.time.LocalDate;
 
-public class Reseva {
+public class Reserva {
 
     public LocalDate fechaSolicitud;
     public LocalDate fechaPlanificada;
