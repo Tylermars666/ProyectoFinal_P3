@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class Reserva {
 
-    public LocalDate fechaSolicitud;
-    public LocalDate fechaPlanificada;
-    public Cliente cliente;
-    public int cantidadPersonas;
-    public Paquete paquete;
-    public Guia guia;
-    public String estadoReserva;
+    private LocalDate fechaSolicitud;
+    private LocalDate fechaPlanificada;
+    private Cliente cliente;
+    private int cantidadPersonas;
+    private Paquete paquete;
+    private Guia guia;
+    private String estadoReserva;
 
 }

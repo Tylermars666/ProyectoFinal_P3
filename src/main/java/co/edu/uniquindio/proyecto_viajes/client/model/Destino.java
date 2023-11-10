@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 public class Destino {

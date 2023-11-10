@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class Paquete {
 
-    public String nombre;
-    public int duracion;
-    String serviciosAdicionales;
-    double precio;
-    int cupoMax;
-    LocalDate fechaLimite;
+    private String nombre;
+    private int duracion;
+    private String serviciosAdicionales;
+    private double precio;
+    private int cupoMax;
+    private LocalDate fechaLimite;
 
 
 
