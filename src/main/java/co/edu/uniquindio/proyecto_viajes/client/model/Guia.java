@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Guia {
 
-    public String nombre;
-    public String identificacion;
-    public ArrayList<String> idiomas;
-    public int Experiencia;
+    private String nombre;
+    private String identificacion;
+    private ArrayList<String> idiomas;
+    private int Experiencia;
 
 }

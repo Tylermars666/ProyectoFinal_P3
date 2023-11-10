@@ -4,9 +4,9 @@ import javafx.scene.shape.StrokeLineCap;
 
 public class Cliente {
 
-    public String nombreCompleto;
-    public String identificacion;
-    public String email;
-    public String numTelefono;
-    public String residencia;
+    private String nombreCompleto;
+    private String identificacion;
+    private String email;
+    private String numTelefono;
+    private String residencia;
 }
