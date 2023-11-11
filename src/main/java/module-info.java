@@ -1,6 +1,7 @@
 module co.edu.uniquindio.proyecto_viajes {
     requires javafx.controls;
     requires javafx.fxml;
+    requires lombok;
 
 
     opens co.edu.uniquindio.proyecto_viajes to javafx.fxml;

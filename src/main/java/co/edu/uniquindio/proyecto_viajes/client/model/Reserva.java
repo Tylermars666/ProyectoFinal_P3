@@ -1,7 +1,12 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
 
 import java.time.LocalDate;
+import lombok.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reserva {
 
     private LocalDate fechaSolicitud;

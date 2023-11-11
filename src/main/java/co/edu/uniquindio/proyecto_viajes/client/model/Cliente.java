@@ -1,6 +1,8 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
+import lombok.*;
 
 public class Cliente {
+
 
     private String nombreCompleto;
     private String identificacion;

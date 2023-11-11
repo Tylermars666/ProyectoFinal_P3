@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyecto_viajes.client.model;
 
 
 import java.util.ArrayList;
+import lombok.*;
 
 public class Destino {
 
