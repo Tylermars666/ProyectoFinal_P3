@@ -11,6 +11,7 @@ public class Paquete {
     private double precio;
     private int cupoMax;
     private LocalDate fechaLimite;
+    private ArrayList<Destino> destinos;
 
 
 
