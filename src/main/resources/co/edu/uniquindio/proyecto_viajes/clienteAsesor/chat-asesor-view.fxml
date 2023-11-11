@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="package co.edu.uniquindio.proyecto_viajes.clienteAsesor.ChatAppAsesor">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.clienteAsesor.controller.AsesorController">
    <children>
       <TextArea fx:id="txtAreaChat" editable="false" layoutX="28.0" layoutY="25.0" prefHeight="289.0" prefWidth="395.0" />
       <TextField fx:id="txtMensaje" layoutX="28.0" layoutY="346.0" prefHeight="35.0" prefWidth="289.0" promptText="Escribe un mensaje" />
