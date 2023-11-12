@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import lombok.*;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Paquete {
 
     private String nombre;
