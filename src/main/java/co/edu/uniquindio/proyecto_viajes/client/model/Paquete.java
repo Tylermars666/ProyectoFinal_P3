@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import lombok.*;
@@ -8,7 +9,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Paquete {
+public class Paquete implements Serializable {
 
     private String nombre;
     private int duracion;

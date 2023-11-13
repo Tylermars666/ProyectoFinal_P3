@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto_viajes.client.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import lombok.*;
 
@@ -7,7 +8,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Guia {
+public class Guia implements Serializable {
 
     private String nombreCompleto;
     private String identificacion;

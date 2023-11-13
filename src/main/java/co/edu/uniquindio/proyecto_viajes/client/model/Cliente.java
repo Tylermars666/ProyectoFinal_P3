@@ -2,11 +2,13 @@ package co.edu.uniquindio.proyecto_viajes.client.model;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente {
+public class Cliente implements Serializable {
 
 
     private String nombreCompleto;
