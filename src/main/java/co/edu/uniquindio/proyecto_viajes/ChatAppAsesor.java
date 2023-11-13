@@ -6,6 +6,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+/**
+ * Este es el programa que usará el asesor para comunicarse con el cliente
+ * simplemente es una ventana de chat para recibir y responder mensajes
+ */
 public class ChatAppAsesor extends Application {
     @Override
     public void start(Stage stage) throws IOException {

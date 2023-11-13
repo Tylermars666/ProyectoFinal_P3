@@ -2,10 +2,10 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,java
 
 ### Java ###
-# Compiled class file
+# Compiled class files
 *.class
 
-# Log file
+# Log files
 *.log
 
 # BlueJ files
