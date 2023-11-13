@@ -3,8 +3,7 @@ package co.edu.uniquindio.proyecto_viajes.client.model;
 import lombok.*;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {

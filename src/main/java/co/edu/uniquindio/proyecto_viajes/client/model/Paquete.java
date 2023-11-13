@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import lombok.*;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Paquete {

@@ -3,8 +3,7 @@ package co.edu.uniquindio.proyecto_viajes.client.model;
 import java.time.LocalDate;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reserva {

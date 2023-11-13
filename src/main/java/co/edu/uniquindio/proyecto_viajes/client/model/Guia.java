@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import lombok.*;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Guia {
 
-    private String nombre;
+    private String nombreCompleto;
     private String identificacion;
     private ArrayList<String> idiomas;
     private int Experiencia;
