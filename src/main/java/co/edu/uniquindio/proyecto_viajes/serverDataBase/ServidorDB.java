@@ -6,5 +6,23 @@ package co.edu.uniquindio.proyecto_viajes.serverDataBase;
  * Y básicamente va a implementar sockets para estar a la escucha de las peticiones, y devolver la información
  * manipulando los métodos de la clase Database
  */
-public class ServidorDB {
+public class ServidorDB implements Runnable{
+
+    public static void main(String[] args) {
+
+        ServidorDB servidor = new ServidorDB();                  //TODO
+        servidor.init();
+
+    }
+
+    @Override
+    public void run() {
+
+    }
+
+    public void init (){
+
+
+
+    }
 }
