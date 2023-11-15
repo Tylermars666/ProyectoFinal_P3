@@ -6,4 +6,6 @@ package co.edu.uniquindio.proyecto_viajes.serverMensajes;
  * entre el cliente que se quiere comunicar y el asesor que va a responderle.
  */
 public class ServidorMensajes {
+
+
 }
