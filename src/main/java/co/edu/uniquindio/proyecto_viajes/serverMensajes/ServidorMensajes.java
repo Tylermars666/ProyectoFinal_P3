@@ -19,7 +19,7 @@ public class ServidorMensajes implements Runnable {
 
     public static void main(String[] args) {
 
-        ServidorDB servidor = new ServidorDB();
+        ServidorMensajes servidor = new ServidorMensajes();
         servidor.init();
 
     }
@@ -38,7 +38,7 @@ public class ServidorMensajes implements Runnable {
 
                 objetoMensaje = (MensajeChat) flujoEntrada.readObject();
 
-                System.out.printf("%s : %s | para: %s", objetoMensaje.getNickRemitente(),objetoMensaje.getCuerpoMensaje(),objetoMensaje.getIpReceptor());
+                System.out.printf("\n %s : %s | para: %s", objetoMensaje.getNickRemitente(),objetoMensaje.getCuerpoMensaje(),objetoMensaje.getIpReceptor());
 
                 flujoEntrada.close();
                 cliente.close();

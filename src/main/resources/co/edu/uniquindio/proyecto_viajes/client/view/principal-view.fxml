@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.PrincipalController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="32.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/logo.png" />
          </image>
       </ImageView>
+      <TextArea fx:id="txtAChat" layoutX="229.0" layoutY="213.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextField fx:id="txtIpReceptor" layoutX="280.0" layoutY="172.0" promptText="Ip receptor" />
+      <TextField fx:id="txtIpserver" layoutX="280.0" layoutY="129.0" promptText="Ip server" />
+      <TextField fx:id="txtNick" layoutX="280.0" layoutY="88.0" promptText="Nick" />
+      <TextField fx:id="txtMensaje" layoutX="229.0" layoutY="444.0" promptText="mensaje" />
+      <Button fx:id="btnEnviar" layoutX="388.0" layoutY="444.0" mnemonicParsing="false" onAction="#enviarMensaje" text="Enviar" />
    </children>
 </Pane>
