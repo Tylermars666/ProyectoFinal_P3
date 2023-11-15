@@ -66,16 +66,20 @@ public class PrincipalController implements Runnable, Initializable {
 
             ServerSocket servidorAsesor = new ServerSocket(9191);
 
-            Socket clienteSocket = servidorAsesor.accept();
+            while (true){
 
-            ObjectInputStream flujoEntrada = new ObjectInputStream(clienteSocket.getInputStream());
+                Socket clienteSocket = servidorAsesor.accept();
 
-            MensajeChat objetoMensajeEntrada = (MensajeChat) flujoEntrada.readObject();
+                ObjectInputStream flujoEntrada = new ObjectInputStream(clienteSocket.getInputStream());
 
-            this.txtAChat.appendText("\n"+objetoMensajeEntrada.getNickRemitente() + ": " + objetoMensajeEntrada.getCuerpoMensaje());
+                MensajeChat objetoMensajeEntrada = (MensajeChat) flujoEntrada.readObject();
 
-            flujoEntrada.close();
-            clienteSocket.close();
+                this.txtAChat.appendText("\n"+objetoMensajeEntrada.getNickRemitente() + ": " + objetoMensajeEntrada.getCuerpoMensaje());
+
+                flujoEntrada.close();
+                clienteSocket.close();
+            }
+
 
         }catch (Exception e){
             e.printStackTrace();
