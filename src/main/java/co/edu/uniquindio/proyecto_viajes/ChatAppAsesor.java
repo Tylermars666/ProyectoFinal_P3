@@ -14,7 +14,7 @@ import java.io.IOException;
 public class ChatAppAsesor extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ChatAppAsesor.class.getResource("clienteAsesor/chat-cliente-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ChatAppAsesor.class.getResource("clienteAsesor/chat-asesor-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Chat");
         stage.setScene(scene);
