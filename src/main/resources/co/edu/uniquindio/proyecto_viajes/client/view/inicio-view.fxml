@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.InicioController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.InicioController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="32.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgLogoPrincipal" fitHeight="150.0" fitWidth="200.0" layoutX="29.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/logo.png" />
          </image>
       </ImageView>
+      <TextField fx:id="txtBusqueda" layoutX="179.0" layoutY="125.0" prefHeight="25.0" prefWidth="183.0" promptText="¿Que estás buscando?" />
+      <ComboBox fx:id="cmbFiltroBusqueda" layoutX="179.0" layoutY="77.0" onAction="#seleccionarFiltro" prefWidth="150.0" promptText="Filtro de busqueda" />
+      <Button layoutX="383.0" layoutY="125.0" mnemonicParsing="false" onAction="#buscar" prefHeight="25.0" prefWidth="86.0" text="Buscar" />
+      <TableView fx:id="tblPaquetes" layoutX="22.0" layoutY="211.0" onMouseClicked="#seleccionarDestino" prefHeight="200.0" prefWidth="396.0">
+        <columns>
+          <TableColumn fx:id="colNombrePaquete" prefWidth="91.20001602172852" text="Nombre" />
+          <TableColumn fx:id="colDuracionPaquete" prefWidth="77.5999755859375" text="Duracion" />
+            <TableColumn fx:id="colPrecioPaquete" prefWidth="76.79991149902344" text="Precio" />
+            <TableColumn fx:id="colFechaLimitePaquete" prefWidth="96.79998779296875" text="Fecha Limit" />
+            <TableColumn fx:id="colCupoPaquete" prefWidth="54.4000244140625" text="Cupo" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tblCiudad" layoutX="438.0" layoutY="211.0" onMouseClicked="#seleccionarCiudad" prefHeight="200.0" prefWidth="150.0">
+        <columns>
+          <TableColumn fx:id="colCiudad" prefWidth="75.0" text="Ciudad" />
+          <TableColumn fx:id="colClima" prefWidth="75.0" text="Clima" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="imgImagenCiudad" fitHeight="150.0" fitWidth="200.0" layoutX="54.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnSiguiente" layoutX="262.0" layoutY="459.0" mnemonicParsing="false" onAction="#verSiguienteImagen" text="-&gt;" />
+      <Button fx:id="btnAnterior" layoutX="262.0" layoutY="515.0" mnemonicParsing="false" onAction="#verAnteriorImagen" text="&lt;-" />
+      <Label fx:id="lblDescripcion" layoutX="378.0" layoutY="426.0" text="Descripción del destino" />
+      <TextArea fx:id="txtADescripcionDestino" editable="false" layoutX="338.0" layoutY="443.0" prefHeight="117.0" prefWidth="200.0" />
+      <Label layoutX="544.0" layoutY="27.0" onMouseClicked="#abrirLogin" text="Login">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
