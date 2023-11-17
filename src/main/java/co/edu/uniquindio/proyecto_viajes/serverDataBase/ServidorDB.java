@@ -18,6 +18,8 @@ public class ServidorDB implements Runnable{
     @Override
     public void run() {
 
+
+
     }
 
     public void init (){
