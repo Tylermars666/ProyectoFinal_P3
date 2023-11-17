@@ -2,10 +2,13 @@ package co.edu.uniquindio.proyecto_viajes.client.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,9 +67,18 @@ public class InicioController implements Initializable {
     private Label lblDescripcion;
 
     @FXML
-    void abrirLogin(MouseEvent event) {
+    void abrirLogin(MouseEvent event) throws Exception {
 
         //Abre Ventana Login
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/login-view.fxml"));
+
+        Scene scene = new Scene(loader.load());                         //Metodo para conectar ventana principal con ventana Busqueda
+        Stage stage = new Stage();
+        stage.setTitle("Login");
+        stage.setScene(scene);
+
+        LoginController controller = loader.getController();
+        stage.show();
 
     }
 
