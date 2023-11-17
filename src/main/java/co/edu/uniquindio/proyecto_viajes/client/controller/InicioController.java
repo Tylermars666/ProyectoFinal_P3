@@ -72,7 +72,7 @@ public class InicioController implements Initializable {
         //Abre Ventana Login
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/login-view.fxml"));
 
-        Scene scene = new Scene(loader.load());                         //Metodo para conectar ventana principal con ventana Busqueda
+        Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
         stage.setTitle("Login");
         stage.setScene(scene);
