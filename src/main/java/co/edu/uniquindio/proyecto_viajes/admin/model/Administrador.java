@@ -8,8 +8,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Administrador implements Serializable {
 
-    private String nombre;
-    private String clave;
+    private String email;
+    private String identificacion;
 
 
 }

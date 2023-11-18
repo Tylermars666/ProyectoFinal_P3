@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto_viajes.client.controller;
 
+import co.edu.uniquindio.proyecto_viajes.admin.controller.AdministradorController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +43,29 @@ public class LoginController {
     }
 
     @FXML
-    void iniciarSesion(ActionEvent event) {
+    void iniciarSesion(ActionEvent event) throws Exception {
+
+        //DEPENDIENDO DEL ROL SE ABRE VENTANA PRINCIPAL CLIENTES O VENTANA PRINCIPAL ADMINISTRADOR
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/admin/view/admin-view.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Administrador");
+        stage.setScene(scene);
+
+        AdministradorController controller = loader.getController();
+        stage.show();
+
+       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/principal-view.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Principal");
+        stage.setScene(scene);
+
+        PrincipalController controller = loader.getController();
+        stage.show();*/
 
     }
 

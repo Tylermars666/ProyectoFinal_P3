@@ -10,4 +10,6 @@ module co.edu.uniquindio.proyecto_viajes {
     opens co.edu.uniquindio.proyecto_viajes.client.controller to javafx.fxml;
     exports co.edu.uniquindio.proyecto_viajes.clienteAsesor.controller;
     opens co.edu.uniquindio.proyecto_viajes.clienteAsesor.controller to javafx.fxml;
+    exports co.edu.uniquindio.proyecto_viajes.admin.controller;
+    opens co.edu.uniquindio.proyecto_viajes.admin.controller to javafx.fxml;
 }

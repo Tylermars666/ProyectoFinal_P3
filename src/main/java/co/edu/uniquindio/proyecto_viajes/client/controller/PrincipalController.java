@@ -93,7 +93,7 @@ public class PrincipalController {
         stage.setTitle("Edicion");
         stage.setScene(scene);
 
-        ChatClienteController controller = loader.getController();
+        EdicionController controller = loader.getController();
         stage.show();
 
     }
@@ -108,7 +108,7 @@ public class PrincipalController {
         stage.setTitle("Reserva");
         stage.setScene(scene);
 
-        ChatClienteController controller = loader.getController();
+        ReservaController controller = loader.getController();
         stage.show();
 
     }
