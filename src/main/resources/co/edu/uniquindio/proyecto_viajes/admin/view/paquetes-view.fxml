@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.PaquetesController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.PaquetesController">
+   <children>
+      <TableView fx:id="tblPaquetes" layoutX="50.0" layoutY="35.0" onMouseClicked="#seleccionarPaquete" prefHeight="200.0" prefWidth="398.0">
+        <columns>
+          <TableColumn fx:id="colNombrePaquete" prefWidth="75.0" text="Nombre" />
+          <TableColumn fx:id="colDuracionPaquete" prefWidth="75.0" text="Duracion" />
+            <TableColumn fx:id="colPrecioPaquete" prefWidth="75.0" text="Precio" />
+            <TableColumn fx:id="colCupoPaquete" prefWidth="75.0" text="Cupo" />
+            <TableColumn fx:id="colFechaPaquete" prefWidth="96.4000244140625" text="Fecha Limite" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtNombrePaquete" layoutX="50.0" layoutY="270.0" prefHeight="25.0" prefWidth="131.0" promptText="Nombre" />
+      <TextField fx:id="txtDuracionPaquete" layoutX="50.0" layoutY="323.0" prefHeight="25.0" prefWidth="131.0" promptText="Duracion" />
+      <TextField fx:id="txtPrecioPaquete" layoutX="50.0" layoutY="373.0" prefHeight="25.0" prefWidth="131.0" promptText="Precio" />
+      <TextField fx:id="txtCupoPaquete" layoutX="209.0" layoutY="270.0" prefHeight="25.0" prefWidth="131.0" promptText="Cupo" />
+      <DatePicker fx:id="dateFechaPaquete" layoutX="209.0" layoutY="323.0" onAction="#seleccionarFechaPaquete" prefHeight="25.0" prefWidth="131.0" promptText="Fecha Limite" />
+      <TextArea fx:id="txtServiciosAdicionales" layoutX="209.0" layoutY="373.0" prefHeight="86.0" prefWidth="200.0" promptText="Servicios adicionales" />
+      <Button layoutX="50.0" layoutY="490.0" mnemonicParsing="false" onAction="#agregarPaquete" text="Agregar paquete" />
+      <Button layoutX="193.0" layoutY="490.0" mnemonicParsing="false" onAction="#editarPaquete" text="Editar paquete" />
+      <Button layoutX="328.0" layoutY="490.0" mnemonicParsing="false" onAction="#eliminarPaquete" text="Eliminar paquete" />
+   </children>
+</Pane>
