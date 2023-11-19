@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.GuiasController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.GuiasController">
+   <children>
+      <TableView fx:id="tblGuias" layoutX="49.0" layoutY="38.0" onMouseClicked="#seleccionarGuia" prefHeight="200.0" prefWidth="284.0">
+        <columns>
+          <TableColumn fx:id="colNombreGuia" prefWidth="101.59998321533203" text="Nombre" />
+          <TableColumn fx:id="colIdentificacionGuia" prefWidth="107.20001220703125" text="Identificacion" />
+            <TableColumn fx:id="colExperienciaGuia" prefWidth="76.0" text="Experiencia" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtNombreGuia" layoutX="49.0" layoutY="273.0" prefHeight="25.0" prefWidth="136.0" promptText="Nombre" />
+      <TextField fx:id="txtIdentificacionGuia" layoutX="49.0" layoutY="318.0" prefHeight="25.0" prefWidth="136.0" promptText="Identificacion" />
+      <TextField fx:id="txtExperienciaGuia" layoutX="49.0" layoutY="363.0" prefHeight="25.0" prefWidth="136.0" promptText="Experiencia" />
+      <Button layoutX="49.0" layoutY="432.0" mnemonicParsing="false" onAction="#agregarGuia" text="Agregar" />
+      <Button layoutX="123.0" layoutY="432.0" mnemonicParsing="false" onAction="#editarGuia" text="Editar" />
+      <Button layoutX="274.0" layoutY="432.0" mnemonicParsing="false" onAction="#eliminarGuia" text="Eliminar" />
+      <TextField fx:id="txtIdioma1Guia" layoutX="200.0" layoutY="273.0" prefHeight="25.0" prefWidth="136.0" promptText="Idioma 1" />
+      <TextField fx:id="txtIdioma2Guia" layoutX="200.0" layoutY="318.0" prefHeight="25.0" prefWidth="136.0" promptText="Idioma 2" />
+      <TextField fx:id="txtIdioma3Guia" layoutX="200.0" layoutY="363.0" prefHeight="25.0" prefWidth="136.0" promptText="Idioma 3" />
+   </children>
+</Pane>
