@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.ReservaController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="483.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.ReservaController">
+   <children>
+      <TextField fx:id="txtCantidadPersonas" layoutX="50.0" layoutY="49.0" promptText="Cantidad personas" />
+      <DatePicker fx:id="dateFechaPlanificada" layoutX="251.0" layoutY="49.0" onAction="#elegirFechaReserva" promptText="Fecha planificada" />
+      <TableView fx:id="tblReservas" layoutX="50.0" layoutY="202.0" prefHeight="200.0" prefWidth="380.0">
+        <columns>
+          <TableColumn fx:id="colFechaSolicitud" prefWidth="112.00000762939453" text="Fecha de solicitud" />
+          <TableColumn fx:id="colFechaPlanificada" prefWidth="103.20001220703125" text="Fecha planificada" />
+            <TableColumn fx:id="colNombreGuia" prefWidth="75.0" text="Guia" />
+            <TableColumn fx:id="colEstadoReserva" prefWidth="87.19998168945312" text="Estado reserva" />
+        </columns>
+      </TableView>
+      <ComboBox fx:id="cmbListaGuias" layoutX="50.0" layoutY="122.0" onAction="#elegirGuia" prefHeight="25.0" prefWidth="149.0" promptText="Elegir guia" />
+      <Button layoutX="251.0" layoutY="122.0" mnemonicParsing="false" onAction="#agregarReserva" prefHeight="25.0" prefWidth="175.0" text="Agregar reserva" />
+      <TextField fx:id="txtNumReserva" layoutX="50.0" layoutY="428.0" />
+      <Button layoutX="327.0" layoutY="428.0" mnemonicParsing="false" onAction="#cancelarReserva" text="Cancelar reserva" />
+   </children>
+</Pane>

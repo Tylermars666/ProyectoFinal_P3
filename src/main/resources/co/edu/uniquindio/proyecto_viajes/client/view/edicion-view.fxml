@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.EdicionController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="287.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.client.controller.EdicionController">
+   <children>
+      <Button layoutX="91.0" layoutY="261.0" mnemonicParsing="false" onAction="#aceptarCambios" text="Aceptar cambios" />
+      <TextField fx:id="txtNuevoNombre" layoutX="69.0" layoutY="54.0" promptText="Nuevo nombre" />
+      <TextField fx:id="txtNuevoEmail" layoutX="69.0" layoutY="98.0" promptText="Nuevo email" />
+      <TextField fx:id="txtNuevoTelefono" layoutX="69.0" layoutY="144.0" promptText="Nuevo telefono" />
+      <TextField fx:id="txtNuevaResidencia" layoutX="69.0" layoutY="188.0" promptText="Nueva residencia" />
+   </children>
+</Pane>

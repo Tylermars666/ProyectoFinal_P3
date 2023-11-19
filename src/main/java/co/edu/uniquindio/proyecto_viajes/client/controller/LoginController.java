@@ -47,7 +47,7 @@ public class LoginController {
 
         //DEPENDIENDO DEL ROL SE ABRE VENTANA PRINCIPAL CLIENTES O VENTANA PRINCIPAL ADMINISTRADOR
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/admin/view/admin-view.fxml"));
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/admin/view/admin-view.fxml"));
 
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
@@ -55,9 +55,9 @@ public class LoginController {
         stage.setScene(scene);
 
         AdministradorController controller = loader.getController();
-        stage.show();
+        stage.show();*/
 
-       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/principal-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/principal-view.fxml"));
 
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
@@ -65,7 +65,7 @@ public class LoginController {
         stage.setScene(scene);
 
         PrincipalController controller = loader.getController();
-        stage.show();*/
+        stage.show();
 
     }
 
