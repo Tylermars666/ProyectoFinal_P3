@@ -2,7 +2,6 @@ package co.edu.uniquindio.proyecto_viajes.serverMensajes;
 
 
 import co.edu.uniquindio.proyecto_viajes.client.logic.MensajeChat;
-import co.edu.uniquindio.proyecto_viajes.serverDataBase.ServidorDB;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
