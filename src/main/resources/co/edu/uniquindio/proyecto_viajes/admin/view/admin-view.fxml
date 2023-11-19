@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.AdministradorController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="214.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.AdministradorController">
+   <children>
+      <ComboBox fx:id="cmbOpcionesVentanas" layoutX="32.0" layoutY="40.0" onAction="#elegirVentanaAdministrador" prefWidth="150.0" promptText="Elija ventana" />
+      <Button layoutX="81.0" layoutY="93.0" mnemonicParsing="false" onAction="#abrirVentana" text="Abrir" />
+   </children>
+</Pane>

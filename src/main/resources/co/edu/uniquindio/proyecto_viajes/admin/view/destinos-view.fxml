@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.DestinosController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.DestinosController">
+   <children>
+      <TableView fx:id="tblDestino" layoutX="40.0" layoutY="34.0" onMouseClicked="#seleccionarDestino" prefHeight="200.0" prefWidth="298.0">
+        <columns>
+          <TableColumn fx:id="colNombreDestino" prefWidth="97.60004043579102" text="Nombre" />
+          <TableColumn fx:id="colCiudadDestino" prefWidth="95.99993896484375" text="Ciudad" />
+            <TableColumn fx:id="colClimaDestino" prefWidth="104.79991149902344" text="Clima" />
+        </columns>
+      </TableView>
+      <Button layoutX="40.0" layoutY="501.0" mnemonicParsing="false" onAction="#agregarDestino" text="Agregar" />
+      <Button layoutX="165.0" layoutY="501.0" mnemonicParsing="false" onAction="#editarDestino" text="Editar" />
+      <Button layoutX="279.0" layoutY="501.0" mnemonicParsing="false" onAction="#eliminarDestino" text="Eliminar" />
+      <TextField fx:id="txtNombreDestino" layoutX="38.0" layoutY="262.0" prefHeight="25.0" prefWidth="121.0" promptText="Nombre" />
+      <TextField fx:id="txtClimaDestino" layoutX="218.0" layoutY="262.0" prefHeight="25.0" prefWidth="121.0" promptText="Clima" />
+      <TextField fx:id="txtCiudadDestino" layoutX="40.0" layoutY="306.0" prefHeight="25.0" prefWidth="121.0" promptText="Ciudad" />
+      <TextArea fx:id="txtDescripcionDestino" layoutX="40.0" layoutY="349.0" prefHeight="119.0" prefWidth="121.0" promptText="Descripcion" />
+      <TextField fx:id="txtRutaImg1" editable="false" layoutX="218.0" layoutY="306.0" prefHeight="25.0" prefWidth="76.0" promptText="ruta img 1" />
+      <TextField fx:id="txtRutaImg2" editable="false" layoutX="218.0" layoutY="349.0" prefHeight="25.0" prefWidth="76.0" promptText="ruta img 2" />
+      <TextField fx:id="txtRutaImg3" editable="false" layoutX="218.0" layoutY="392.0" prefHeight="25.0" prefWidth="76.0" promptText="ruta img 3" />
+      <Button layoutX="310.0" layoutY="306.0" mnemonicParsing="false" onAction="#seleccionarRuta1" prefHeight="25.0" prefWidth="29.0" text="..." />
+      <Button layoutX="310.0" layoutY="349.0" mnemonicParsing="false" onAction="#seleccionarRuta2" prefHeight="25.0" prefWidth="29.0" text="..." />
+      <Button layoutX="310.0" layoutY="392.0" mnemonicParsing="false" onAction="#seleccionarRuta3" prefHeight="25.0" prefWidth="29.0" text="..." />
+   </children>
+</Pane>
