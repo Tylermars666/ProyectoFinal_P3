@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto_viajes.admin.controller;
 
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
+import co.edu.uniquindio.proyecto_viajes.exception.CamposVaciosException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +13,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DestinosController implements Initializable {
@@ -50,8 +60,52 @@ public class DestinosController implements Initializable {
     @FXML
     private TextField txtRutaImg3;
 
+    private String nombre,clima,ciudad,descripcion,ruta1,ruta2,ruta3;
+
     @FXML
     void agregarDestino(ActionEvent event) {
+
+        try(Socket socket = new Socket("localhost",9595)){           //SERVIDOR EN LOCALHOST EN ESTE CASO
+
+            nombre = this.txtNombreDestino.getText();
+            clima = this.txtClimaDestino.getText();
+            ciudad = this.txtClimaDestino.getText();
+            descripcion = this.txtDescripcionDestino.getText();
+            ruta1 = this.txtRutaImg1.getText();
+            ruta2 = this.txtRutaImg2.getText();
+            ruta3 = this.txtRutaImg3.getText();
+
+            if(nombre.isBlank()||clima.isBlank()||ciudad.isBlank()||descripcion.isBlank()||ruta1.isBlank()||ruta2.isBlank()||ruta3.isBlank()){
+                throw new CamposVaciosException();
+            }
+
+            ArrayList<byte[]> imagenes = new ArrayList<>();
+            imagenes.add(Files.readAllBytes(Paths.get(ruta1)));
+            imagenes.add(Files.readAllBytes(Paths.get(ruta2)));
+            imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
+
+            Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima);
+
+
+            ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
+            flujoSalida.writeObject(destinoCreado);
+            flujoSalida.flush();
+            flujoSalida.close();
+
+            ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
+            boolean es_exitoso = flujoEntrada.readBoolean();
+            flujoEntrada.close();
+
+
+
+
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (CamposVaciosException e){
+            e.getAlert().showAndWait();
+        }
 
     }
 
