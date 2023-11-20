@@ -30,14 +30,14 @@ public class Database {                           //OBJETO SINGLETON
         return instance;
     }
 
-    public boolean crear(String entidad, Object objeto){
+    public Object crear(String entidad, Object objeto){
 
         //Implementar switch para ver cual entidad se va a crear y almacenar en la base de datos
 
-        return false;
+        return true;
     }
 
-    public boolean eliminar(String entidad, Object objeto){
+    public Object eliminar(String entidad, Object objeto){
 
         return false;
     }
@@ -47,7 +47,7 @@ public class Database {                           //OBJETO SINGLETON
         return null;
     }
 
-    public ArrayList<Object> listar(String entidad, Object objeto){
+    public Object listar(String entidad, Object objeto){
 
         return null;
     }

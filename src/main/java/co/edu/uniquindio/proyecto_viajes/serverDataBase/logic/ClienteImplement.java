@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class ClienteImplement implements CRUD {
     @Override
-    public boolean crear() {
+    public Object crear() {
         return false;
     }
 
     @Override
-    public boolean eliminar() {
+    public Object eliminar() {
         return false;
     }
 
@@ -19,7 +19,7 @@ public class ClienteImplement implements CRUD {
     }
 
     @Override
-    public ArrayList<Object> listar() {
+    public Object listar() {
         return null;
     }
 }

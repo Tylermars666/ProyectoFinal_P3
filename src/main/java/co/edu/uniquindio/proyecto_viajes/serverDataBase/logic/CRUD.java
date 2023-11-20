@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public interface CRUD {
 
-    boolean crear();
-    boolean eliminar();
+    Object crear();
+    Object eliminar();
     Object editar();
-    ArrayList<Object> listar();
+    Object listar();
 
 
 

@@ -1,14 +1,12 @@
 package co.edu.uniquindio.proyecto_viajes.admin.controller;
 
+import co.edu.uniquindio.proyecto_viajes.DataPaquete;
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 import co.edu.uniquindio.proyecto_viajes.exception.CamposVaciosException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -65,7 +63,9 @@ public class DestinosController implements Initializable {
     @FXML
     void agregarDestino(ActionEvent event) {
 
-        try(Socket socket = new Socket("localhost",9595)){           //SERVIDOR EN LOCALHOST EN ESTE CASO
+        try{           //SERVIDOR EN LOCALHOST EN ESTE CASO
+
+            Socket socket = new Socket("localhost",9595);
 
             nombre = this.txtNombreDestino.getText();
             clima = this.txtClimaDestino.getText();
@@ -85,16 +85,22 @@ public class DestinosController implements Initializable {
             imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
 
             Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima);
+            DataPaquete paqueteDatos = new DataPaquete("Destino","Crear",destinoCreado);
 
 
             ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
-            flujoSalida.writeObject(destinoCreado);
+            flujoSalida.writeObject(paqueteDatos);
             flujoSalida.flush();
-            flujoSalida.close();
+
 
             ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
-            boolean es_exitoso = flujoEntrada.readBoolean();
+            boolean es_exitoso = (Boolean) flujoEntrada.readObject();
+            flujoSalida.close();
             flujoEntrada.close();
+
+            if(es_exitoso){
+                new Alert(Alert.AlertType.CONFIRMATION,"Bien mi rey").showAndWait();
+            }
 
 
 
@@ -105,6 +111,8 @@ public class DestinosController implements Initializable {
             e.printStackTrace();
         }catch (CamposVaciosException e){
             e.getAlert().showAndWait();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
         }
 
     }
