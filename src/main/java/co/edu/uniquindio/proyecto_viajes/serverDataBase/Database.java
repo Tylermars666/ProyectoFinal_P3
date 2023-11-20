@@ -34,22 +34,139 @@ public class Database {                           //OBJETO SINGLETON
 
         //Implementar switch para ver cual entidad se va a crear y almacenar en la base de datos
 
-        return true;
+        Object response = null;
+
+        switch (entidad){
+            case "admin":
+                response = admin.crear(objeto);
+                break;
+
+            case "cliente":
+                response = cliente.crear(objeto);
+                break;
+
+            case "comentario":
+                response = comentario.crear(objeto);
+                break;
+
+            case "destino":
+                response = destino.crear(objeto);
+                break;
+
+            case "guia":
+                response = guia.crear(objeto);
+                break;
+            case "paquete":
+                response = paquete.crear(objeto);
+                break;
+            case "reserva":
+                response = reserva.crear(objeto);
+                break;
+        }
+
+        return response;
     }
 
     public Object eliminar(String entidad, Object objeto){
 
-        return false;
+        Object response = null;
+
+        switch (entidad){
+            case "admin":
+                response = admin.eliminar(objeto);
+                break;
+
+            case "cliente":
+                response = cliente.eliminar(objeto);
+                break;
+
+            case "comentario":
+                response = comentario.eliminar(objeto);
+                break;
+
+            case "destino":
+                response = destino.eliminar(objeto);
+                break;
+
+            case "guia":
+                response = guia.eliminar(objeto);
+                break;
+            case "paquete":
+                response = paquete.eliminar(objeto);
+                break;
+            case "reserva":
+                response = reserva.eliminar(objeto);
+                break;
+        }
+        return response;
     }
 
     public Object editar(String entidad, Object objeto){
 
-        return null;
+        Object response = null;
+
+        switch (entidad){
+            case "admin":
+                response = admin.editar(objeto);
+                break;
+
+            case "cliente":
+                response = cliente.editar(objeto);
+                break;
+
+            case "comentario":
+                response = comentario.editar(objeto);
+                break;
+
+            case "destino":
+                response = destino.editar(objeto);
+                break;
+
+            case "guia":
+                response = guia.editar(objeto);
+                break;
+            case "paquete":
+                response = paquete.editar(objeto);
+                break;
+            case "reserva":
+                response = reserva.editar(objeto);
+                break;
+        }
+        return response;
     }
 
     public Object listar(String entidad, Object objeto){
 
-        return null;
+        Object response = null;
+
+        switch (entidad){
+            case "admin":
+                response = admin.listar(objeto);
+                break;
+
+            case "cliente":
+                response = cliente.listar(objeto);
+                break;
+
+            case "comentario":
+                response = comentario.listar(objeto);
+                break;
+
+            case "destino":
+                response = destino.listar(objeto);
+                break;
+
+            case "guia":
+                response = guia.listar(objeto);
+                break;
+            case "paquete":
+                response = paquete.listar(objeto);
+                break;
+            case "reserva":
+                response = reserva.listar(objeto);
+                break;
+        }
+        return response;
     }
 
 

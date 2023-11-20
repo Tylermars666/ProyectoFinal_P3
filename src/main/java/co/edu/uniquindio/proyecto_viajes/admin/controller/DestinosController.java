@@ -3,10 +3,14 @@ package co.edu.uniquindio.proyecto_viajes.admin.controller;
 import co.edu.uniquindio.proyecto_viajes.DataPaquete;
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 import co.edu.uniquindio.proyecto_viajes.exception.CamposVaciosException;
+import co.edu.uniquindio.proyecto_viajes.exception.RegistroExistenteException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -60,6 +64,8 @@ public class DestinosController implements Initializable {
 
     private String nombre,clima,ciudad,descripcion,ruta1,ruta2,ruta3;
 
+    private ObservableList<Destino> destinosObservables;
+
     @FXML
     void agregarDestino(ActionEvent event) {
 
@@ -69,7 +75,7 @@ public class DestinosController implements Initializable {
 
             nombre = this.txtNombreDestino.getText();
             clima = this.txtClimaDestino.getText();
-            ciudad = this.txtClimaDestino.getText();
+            ciudad = this.txtCiudadDestino.getText();
             descripcion = this.txtDescripcionDestino.getText();
             ruta1 = this.txtRutaImg1.getText();
             ruta2 = this.txtRutaImg2.getText();
@@ -99,7 +105,16 @@ public class DestinosController implements Initializable {
             flujoEntrada.close();
 
             if(es_exitoso){
-                new Alert(Alert.AlertType.CONFIRMATION,"Bien mi rey").showAndWait();
+                new Alert(Alert.AlertType.CONFIRMATION,"Destino agregado con éxito").showAndWait();
+                destinosObservables = FXCollections.observableArrayList();
+                this.colNombreDestino.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                this.colCiudadDestino.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+                this.colClimaDestino.setCellValueFactory(new PropertyValueFactory<>("clima"));
+
+                this.destinosObservables.addAll(destinoCreado);
+                this.tblDestino.setItems(destinosObservables);
+            }else{
+                throw new RegistroExistenteException();
             }
 
 
@@ -113,6 +128,8 @@ public class DestinosController implements Initializable {
             e.getAlert().showAndWait();
         }catch (ClassNotFoundException e){
             e.printStackTrace();
+        }catch (RegistroExistenteException e){
+            e.getAlert().showAndWait();
         }
 
     }

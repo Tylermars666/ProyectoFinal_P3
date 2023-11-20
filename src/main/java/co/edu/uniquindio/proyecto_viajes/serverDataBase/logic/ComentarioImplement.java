@@ -4,22 +4,22 @@ import java.util.ArrayList;
 
 public class ComentarioImplement implements CRUD{
     @Override
-    public Object crear() {
+    public Object crear(Object objeto) {
         return false;
     }
 
     @Override
-    public Object eliminar() {
+    public Object eliminar(Object objeto) {
         return false;
     }
 
     @Override
-    public Object editar() {
+    public Object editar(Object objeto) {
         return false;
     }
 
     @Override
-    public Object listar() {
+    public Object listar(Object objeto) {
         return null;
     }
 }
