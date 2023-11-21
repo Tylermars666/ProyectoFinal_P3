@@ -2,7 +2,9 @@ package co.edu.uniquindio.proyecto_viajes.serverDataBase.logic;
 
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
@@ -14,13 +16,22 @@ public class DestinoImplement implements CRUD{
 
         try{
 
-            ArrayList<Destino> destinos = new ArrayList<>();
-            destinos.add((Destino) objeto);
+            if(existeDestino((Destino) objeto)){
 
-            ObjectOutputStream listaDestinosParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
-            listaDestinosParaGuardar.writeObject(destinos);
+                response = new Response("existe",objeto);
 
-            response = new Response("Guardado",objeto);
+            }else{
+
+                ObjectInputStream objetoPersistido = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+                ArrayList<Destino> destinosPersistidos = (ArrayList<Destino>) objetoPersistido.readObject();
+                destinosPersistidos.add((Destino) objeto);
+
+                ObjectOutputStream listaDestinosParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+                listaDestinosParaGuardar.writeObject(destinosPersistidos);
+
+                response = new Response("guardado",objeto);
+            }
+
 
             return response;
 
@@ -44,5 +55,31 @@ public class DestinoImplement implements CRUD{
     @Override
     public Object listar(Object objeto) {
         return null;
+    }
+
+    public boolean existeDestino(Destino destino){
+
+        try{
+
+            ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            ArrayList<Destino> listaDestinos = (ArrayList<Destino>) objeto.readObject();
+
+            for(Destino destinoPersistido: listaDestinos){
+
+                if(destinoPersistido.getNombre().equalsIgnoreCase(destino.getNombre())){
+                    return true;
+                }
+
+            }
+
+            return false;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return true;
+
     }
 }
