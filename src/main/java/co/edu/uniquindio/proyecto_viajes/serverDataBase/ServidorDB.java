@@ -42,16 +42,16 @@ public class ServidorDB implements Runnable{
                 ObjectOutputStream flujoSalida = new ObjectOutputStream(cliente.getOutputStream());
 
                 if(paqueteEntrada.getRequest().equalsIgnoreCase("crear")){
-                    response = Database.getInstance().crear(paqueteEntrada.getNombreEntidad(),paqueteEntrada);
+                    response = Database.getInstance().crear(paqueteEntrada.getNombreEntidad(),paqueteEntrada.getObjeto());
                     flujoSalida.writeObject(response);
                 } else if (paqueteEntrada.getRequest().equalsIgnoreCase("editar")) {
-                    response = Database.getInstance().editar(paqueteEntrada.getNombreEntidad(),paqueteEntrada);
+                    response = Database.getInstance().editar(paqueteEntrada.getNombreEntidad(),paqueteEntrada.getObjeto());
                     flujoSalida.writeObject(response);
                 } else if (paqueteEntrada.getRequest().equalsIgnoreCase("listar")) {
-                    response = Database.getInstance().listar(paqueteEntrada.getRequest(),paqueteEntrada);
+                    response = Database.getInstance().listar(paqueteEntrada.getNombreEntidad(),paqueteEntrada.getObjeto());
                     flujoSalida.writeObject(response);
                 } else if (paqueteEntrada.getRequest().equalsIgnoreCase("eliminar")) {
-                    response = Database.getInstance().eliminar(paqueteEntrada.getNombreEntidad(),paqueteEntrada);
+                    response = Database.getInstance().eliminar(paqueteEntrada.getNombreEntidad(),paqueteEntrada.getObjeto());
                     flujoSalida.writeObject(response);
                 }
 

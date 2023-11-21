@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyecto_viajes.DataPaquete;
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 import co.edu.uniquindio.proyecto_viajes.exception.CamposVaciosException;
 import co.edu.uniquindio.proyecto_viajes.exception.RegistroExistenteException;
+import co.edu.uniquindio.proyecto_viajes.serverDataBase.logic.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -91,7 +92,7 @@ public class DestinosController implements Initializable {
             imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
 
             Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima);
-            DataPaquete paqueteDatos = new DataPaquete("Destino","Crear",destinoCreado);
+            DataPaquete paqueteDatos = new DataPaquete("destino","crear",destinoCreado);
 
 
             ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
@@ -100,11 +101,12 @@ public class DestinosController implements Initializable {
 
 
             ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
-            boolean es_exitoso = (Boolean) flujoEntrada.readObject();
+            Response response = (Response) flujoEntrada.readObject();
+
             flujoSalida.close();
             flujoEntrada.close();
 
-            if(es_exitoso){
+            if(response.getMensaje().equalsIgnoreCase("guardado")){
                 new Alert(Alert.AlertType.CONFIRMATION,"Destino agregado con éxito").showAndWait();
                 destinosObservables = FXCollections.observableArrayList();
                 this.colNombreDestino.setCellValueFactory(new PropertyValueFactory<>("nombre"));
