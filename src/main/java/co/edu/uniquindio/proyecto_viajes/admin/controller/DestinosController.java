@@ -157,7 +157,7 @@ public class DestinosController implements Initializable {
             this.txtNombreDestino.setText(destinoSeleccionado.getNombre());
             this.txtClimaDestino.setText(destinoSeleccionado.getClima());
             this.txtCiudadDestino.setText(destinoSeleccionado.getCiudad());
-            //this.txtDescripcionDestino.setText(destinoSeleccionado.get);
+            this.txtDescripcionDestino.setText(destinoSeleccionado.getDescripcion());
 
         }
 
