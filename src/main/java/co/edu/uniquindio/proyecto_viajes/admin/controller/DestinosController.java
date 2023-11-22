@@ -145,6 +145,14 @@ public class DestinosController implements Initializable {
     @FXML
     void eliminarDestino(ActionEvent event) {
 
+        Destino destinoSeleccionado = this.tblDestino.getSelectionModel().getSelectedItem();
+
+        if(destinoSeleccionado!=null){
+
+            
+
+        }
+
     }
 
     @FXML
