@@ -15,5 +15,6 @@ public class Destino implements Serializable {
     private String ciudad;
     private ArrayList<byte[]> imagenes;
     private String clima;
+    private String descripcion;
 
 }

@@ -45,7 +45,7 @@ public class CreadorDB {
         imagenes.add(Files.readAllBytes(Paths.get("T:/lomas/lomas2.jpg")));
         imagenes.add(Files.readAllBytes(Paths.get("T:/lomas/lomas1.jpg")));
 
-        Destino destino = new Destino("Lomas Turbas","Tangamandapio",imagenes,"Frio");
+        Destino destino = new Destino("Lomas Turbas","Tangamandapio",imagenes,"Frio","Es una ciudad muy empinada");
         listaDestinos.add(destino);
 
         Paquete paquete = new Paquete("Destinos Lomudos",5,"Pase en caballo",30000,4, LocalDate.now(),listaDestinos);
@@ -56,13 +56,12 @@ public class CreadorDB {
 
         /*ObjectOutputStream listaPersistida = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
         listaPersistida.writeObject(listaDestinos);
-        listaPersistida.flush();
-        */
+        listaPersistida.flush();*/
 
 
-        ObjectInputStream listaObtenida = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/reservas/listaReservas"));
-        ArrayList<Reserva> listaLeida = (ArrayList<Reserva>) listaObtenida.readObject();
-        System.out.println(listaLeida.get(0).getEstadoReserva());
+        ObjectInputStream listaObtenida = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+        ArrayList<Destino> listaLeida = (ArrayList<Destino>) listaObtenida.readObject();
+        System.out.println(listaLeida.get(0).getDescripcion());
 
        // listaComentarios.add(new Comentario("Está muy bueno el destino",cliente,))
 

@@ -93,7 +93,7 @@ public class DestinosController implements Initializable {
             imagenes.add(Files.readAllBytes(Paths.get(ruta2)));
             imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
 
-            Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima);
+            Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima,descripcion);
             DataPaquete paqueteDatos = new DataPaquete("destino","crear",destinoCreado);
 
 
@@ -149,6 +149,17 @@ public class DestinosController implements Initializable {
 
     @FXML
     void seleccionarDestino(MouseEvent event) {
+
+        Destino destinoSeleccionado = this.tblDestino.getSelectionModel().getSelectedItem();
+
+        if(destinoSeleccionado!=null){
+
+            this.txtNombreDestino.setText(destinoSeleccionado.getNombre());
+            this.txtClimaDestino.setText(destinoSeleccionado.getClima());
+            this.txtCiudadDestino.setText(destinoSeleccionado.getCiudad());
+            //this.txtDescripcionDestino.setText(destinoSeleccionado.get);
+
+        }
 
     }
 
