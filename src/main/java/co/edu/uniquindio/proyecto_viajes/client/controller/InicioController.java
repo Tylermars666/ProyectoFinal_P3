@@ -12,10 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -56,7 +59,7 @@ public class InicioController implements Initializable {
     private ImageView imgLogoPrincipal;
 
     @FXML
-    private TableView<?> tblCiudad;
+    private TableView<Destino> tblCiudad;
 
     @FXML
     private TableView<Paquete> tblPaquetes;
@@ -76,11 +79,11 @@ public class InicioController implements Initializable {
     @FXML
     private Label lblDescripcion;
 
-    private ArrayList<Paquete> paquetesRecibidos;
-
     private ObservableList<Paquete> paquetesObservables;
     private ObservableList<Destino> destinosObservables;
     private ArrayList<Paquete>paquetesActualizados;
+    private Destino destinoSeleccionado;
+    private int imgCont=1;
 
     @FXML
     void abrirLogin(MouseEvent event) throws Exception {
@@ -106,10 +109,30 @@ public class InicioController implements Initializable {
     @FXML
     void seleccionarCiudad(MouseEvent event) {
 
+        destinoSeleccionado = this.tblCiudad.getSelectionModel().getSelectedItem();
+
+        this.txtADescripcionDestino.setVisible(true);
+        this.btnSiguiente.setVisible(true);
+        this.btnAnterior.setVisible(true);
+        this.txtADescripcionDestino.setText(destinoSeleccionado.getDescripcion());
+        this.imgImagenCiudad.setImage(new Image(new ByteArrayInputStream(destinoSeleccionado.getImagenes().get(1))));
+
+
     }
 
     @FXML
     void seleccionarDestino(MouseEvent event) {
+
+        Paquete paqueteSeleccionado = this.tblPaquetes.getSelectionModel().getSelectedItem();
+        ArrayList<Destino> destinosDelPaquete = paqueteSeleccionado.getDestinos();
+
+        destinosObservables = FXCollections.observableArrayList();
+        this.colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        this.colClima.setCellValueFactory(new PropertyValueFactory<>("clima"));
+
+        this.destinosObservables.addAll(destinosDelPaquete);
+        this.tblCiudad.setItems(destinosObservables);
+
 
     }
 
@@ -121,10 +144,27 @@ public class InicioController implements Initializable {
     @FXML
     void verAnteriorImagen(ActionEvent event) {
 
+        this.imgCont = imgCont-1;
+
+        if(imgCont<0){
+            imgCont = 2;
+        }
+
+        this.imgImagenCiudad.setImage(new Image(new ByteArrayInputStream(destinoSeleccionado.getImagenes().get(0))));
+
     }
 
     @FXML
     void verSiguienteImagen(ActionEvent event) {
+
+        this.imgCont = imgCont+1;
+
+        if(imgCont>2){
+            imgCont =0;
+        }
+
+        this.imgImagenCiudad.setImage(new Image(new ByteArrayInputStream(destinoSeleccionado.getImagenes().get(imgCont))));
+
 
     }
 
