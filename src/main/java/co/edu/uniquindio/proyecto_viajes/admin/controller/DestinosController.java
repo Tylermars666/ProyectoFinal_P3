@@ -71,8 +71,8 @@ public class DestinosController implements Initializable {
     void agregarDestino(ActionEvent event) {
 
         try{           //SERVIDOR EN LOCALHOST EN ESTE CASO
-
             Socket socket = new Socket("localhost",9595);
+
 
             nombre = this.txtNombreDestino.getText();
             clima = this.txtClimaDestino.getText();
@@ -118,10 +118,6 @@ public class DestinosController implements Initializable {
             }else{
                 throw new RegistroExistenteException();
             }
-
-
-
-
 
 
         }catch (IOException e){
