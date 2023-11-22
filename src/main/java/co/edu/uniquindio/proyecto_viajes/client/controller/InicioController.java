@@ -112,6 +112,12 @@ public class InicioController implements Initializable {
 
     }
 
+    public void updateList(){
+
+        
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
