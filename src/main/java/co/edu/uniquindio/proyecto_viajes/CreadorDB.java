@@ -4,10 +4,7 @@ import co.edu.uniquindio.proyecto_viajes.admin.model.Administrador;
 import co.edu.uniquindio.proyecto_viajes.client.logic.Comentario;
 import co.edu.uniquindio.proyecto_viajes.client.model.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -57,13 +54,15 @@ public class CreadorDB {
         listaReservas.add(new Reserva(LocalDate.parse("2023-10-30"),LocalDate.parse("2023-11-15"),cliente,4,paquete,guia,"Confirmada"));
         listaComentarios.add(new Comentario("Chimba de destino",cliente,paquete));
 
-        ObjectOutputStream listaPersistida = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+        /*ObjectOutputStream listaPersistida = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
         listaPersistida.writeObject(listaDestinos);
         listaPersistida.flush();
+        */
 
-        
 
-
+        ObjectInputStream listaObtenida = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/reservas/listaReservas"));
+        ArrayList<Reserva> listaLeida = (ArrayList<Reserva>) listaObtenida.readObject();
+        System.out.println(listaLeida.get(0).getEstadoReserva());
 
        // listaComentarios.add(new Comentario("Está muy bueno el destino",cliente,))
 
