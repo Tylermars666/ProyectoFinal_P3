@@ -140,6 +140,14 @@ public class DestinosController implements Initializable {
     @FXML
     void editarDestino(ActionEvent event) {
 
+        Destino destinoSeleccionado = this.tblDestino.getSelectionModel().getSelectedItem();
+
+        if(destinoSeleccionado!=null){
+
+            String ciudadDestinoSeleccionado = destinoSeleccionado.getCiudad();
+            Destino destinoNuevo = new Destino();
+        }
+
     }
 
     @FXML
