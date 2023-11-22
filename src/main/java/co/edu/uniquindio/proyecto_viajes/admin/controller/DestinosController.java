@@ -85,50 +85,50 @@ public class DestinosController implements Initializable {
             ruta3 = this.txtRutaImg3.getText();
 
             if(nombre.isBlank()||clima.isBlank()||ciudad.isBlank()||descripcion.isBlank()||ruta1.isBlank()||ruta2.isBlank()||ruta3.isBlank()){
-                throw new CamposVaciosException();
-            }
-
-            ArrayList<byte[]> imagenes = new ArrayList<>();
-            imagenes.add(Files.readAllBytes(Paths.get(ruta1)));
-            imagenes.add(Files.readAllBytes(Paths.get(ruta2)));
-            imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
-
-            Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima,descripcion);
-            DataPaquete paqueteDatos = new DataPaquete("destino","crear",destinoCreado);
-
-
-            ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
-            flujoSalida.writeObject(paqueteDatos);
-            flujoSalida.flush();
-
-
-            ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
-            Response response = (Response) flujoEntrada.readObject();
-            ArrayList<Destino> destinosRecibidos = (ArrayList<Destino>) response.getObjetoRespuesta();
-
-            flujoSalida.close();
-            flujoEntrada.close();
-            socket.close();
-
-            if(response.getMensaje().equalsIgnoreCase("guardado")){
-                new Alert(Alert.AlertType.CONFIRMATION,"Destino agregado con éxito").showAndWait();
-                this.txtCiudadDestino.clear();
-                this.txtClimaDestino.clear();
-                this.txtDescripcionDestino.clear();
-                this.txtNombreDestino.clear();
-                this.txtRutaImg1.clear();
-                this.txtRutaImg2.clear();
-                this.txtRutaImg3.clear();
-                updateList();
+                new Alert(Alert.AlertType.ERROR,"Asegurese de llenar todos los campos",ButtonType.OK).showAndWait();
             }else{
-                throw new RegistroExistenteException();
+
+                ArrayList<byte[]> imagenes = new ArrayList<>();
+                imagenes.add(Files.readAllBytes(Paths.get(ruta1)));
+                imagenes.add(Files.readAllBytes(Paths.get(ruta2)));
+                imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
+
+                Destino destinoCreado = new Destino(nombre,ciudad,imagenes,clima,descripcion);
+                DataPaquete paqueteDatos = new DataPaquete("destino","crear",destinoCreado);
+
+
+                ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
+                flujoSalida.writeObject(paqueteDatos);
+                flujoSalida.flush();
+
+
+                ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
+                Response response = (Response) flujoEntrada.readObject();
+                ArrayList<Destino> destinosRecibidos = (ArrayList<Destino>) response.getObjetoRespuesta();
+
+                flujoSalida.close();
+                flujoEntrada.close();
+                socket.close();
+
+                if(response.getMensaje().equalsIgnoreCase("guardado")){
+                    new Alert(Alert.AlertType.CONFIRMATION,"Destino agregado con éxito").showAndWait();
+                    this.txtCiudadDestino.clear();
+                    this.txtClimaDestino.clear();
+                    this.txtDescripcionDestino.clear();
+                    this.txtNombreDestino.clear();
+                    this.txtRutaImg1.clear();
+                    this.txtRutaImg2.clear();
+                    this.txtRutaImg3.clear();
+                    updateList();
+                }else{
+                    throw new RegistroExistenteException();
+                }
             }
+
 
 
         }catch (IOException e){
             e.printStackTrace();
-        }catch (CamposVaciosException e){
-            e.getAlert().showAndWait();
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }catch (RegistroExistenteException e){
@@ -144,8 +144,65 @@ public class DestinosController implements Initializable {
 
         if(destinoSeleccionado!=null){
 
-            String ciudadDestinoSeleccionado = destinoSeleccionado.getCiudad();
-            Destino destinoNuevo = new Destino();
+            nombre = this.txtNombreDestino.getText();
+            clima = this.txtClimaDestino.getText();
+            ciudad = this.txtCiudadDestino.getText();
+            descripcion = this.txtDescripcionDestino.getText();
+            ruta1 = this.txtRutaImg1.getText();
+            ruta2 = this.txtRutaImg2.getText();
+            ruta3 = this.txtRutaImg3.getText();
+
+            if(nombre.isBlank()||clima.isBlank()||ciudad.isBlank()||descripcion.isBlank()||ruta1.isBlank()||ruta2.isBlank()||ruta3.isBlank()){
+                new Alert(Alert.AlertType.ERROR,"Asegurese de llenar todos los campos",ButtonType.OK).showAndWait();
+            }else{
+
+                try{
+
+                    ArrayList<byte[]> imagenes = new ArrayList<>();
+                    imagenes.add(Files.readAllBytes(Paths.get(ruta1)));
+                    imagenes.add(Files.readAllBytes(Paths.get(ruta2)));
+                    imagenes.add(Files.readAllBytes(Paths.get(ruta3)));
+                    String ciudadDestinoSeleccionado = destinoSeleccionado.getCiudad();
+                    Destino destinoNuevo = new Destino(nombre,ciudad,imagenes,clima,descripcion);
+                    ArrayList<Object> ciudadViejaDestinoNuevo = new ArrayList<>();
+                    ciudadViejaDestinoNuevo.add(ciudadDestinoSeleccionado);
+                    ciudadViejaDestinoNuevo.add(destinoNuevo);
+
+                    DataPaquete paquete = new DataPaquete("destino","editar",ciudadViejaDestinoNuevo);
+
+                    Socket socket = new Socket("localhost",9595);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(paquete);
+
+                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                    Response response = (Response) objectInputStream.readObject();
+
+                    objectInputStream.close();
+                    objectOutputStream.close();
+                    socket.close();
+
+                    if(response.getMensaje().equalsIgnoreCase("editado")){
+                        new Alert(Alert.AlertType.CONFIRMATION,"Destino editado con exito",ButtonType.OK).showAndWait();
+                        this.txtCiudadDestino.clear();
+                        this.txtClimaDestino.clear();
+                        this.txtDescripcionDestino.clear();
+                        this.txtNombreDestino.clear();
+                        this.txtRutaImg1.clear();
+                        this.txtRutaImg2.clear();
+                        this.txtRutaImg3.clear();
+                        updateList();
+                    }else{
+
+                        new Alert(Alert.AlertType.ERROR,"No se pudo editar el destino",ButtonType.OK).showAndWait();
+
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
         }
 
     }
@@ -173,6 +230,13 @@ public class DestinosController implements Initializable {
                 if(response.getMensaje().equalsIgnoreCase("eliminado")){
 
                     new Alert(Alert.AlertType.CONFIRMATION,"Destino eliminado con exito",ButtonType.OK).showAndWait();
+                    this.txtCiudadDestino.clear();
+                    this.txtClimaDestino.clear();
+                    this.txtDescripcionDestino.clear();
+                    this.txtNombreDestino.clear();
+                    this.txtRutaImg1.clear();
+                    this.txtRutaImg2.clear();
+                    this.txtRutaImg3.clear();
                     updateList();
                 }else{
 

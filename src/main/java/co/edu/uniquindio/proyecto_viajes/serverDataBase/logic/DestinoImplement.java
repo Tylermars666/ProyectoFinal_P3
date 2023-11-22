@@ -82,8 +82,38 @@ public class DestinoImplement implements CRUD{
     @Override
     public Object editar(Object objeto) {
 
+        Response response = null;
+        ArrayList<Destino> listaDestinos = null;
 
-        return false;
+        try{
+
+            ArrayList<Object> ciudadViejaDestinoNuevo = (ArrayList<Object>) objeto;
+            String ciudadVieja = (String) ciudadViejaDestinoNuevo.get(0);
+            Destino destinoNuevo = (Destino) ciudadViejaDestinoNuevo.get(1);
+
+            int indexDestinoViejo = match(ciudadVieja);
+            ObjectInputStream objetoListado = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            listaDestinos = (ArrayList<Destino>) objetoListado.readObject();
+            listaDestinos.remove(indexDestinoViejo);
+            listaDestinos.add(destinoNuevo);
+            objetoListado.close();
+            ObjectOutputStream listaDestinosParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            listaDestinosParaGuardar.writeObject(listaDestinos);
+            listaDestinosParaGuardar.flush();
+            listaDestinosParaGuardar.close();
+
+            response = new Response("editado",listaDestinos);
+
+            return response;
+
+
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+
+
+
+        return response;
     }
 
     @Override
@@ -138,6 +168,30 @@ public class DestinoImplement implements CRUD{
             for(Destino destinoPersistido: listaDestinos){
 
                 if(destinoPersistido.getNombre().equalsIgnoreCase(destino.getNombre())){
+                    return listaDestinos.indexOf(destinoPersistido);
+                }
+
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return -1;
+
+    }
+
+    public int match(String ciudad){
+        try{
+
+            ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            ArrayList<Destino> listaDestinos = (ArrayList<Destino>) objeto.readObject();
+
+            for(Destino destinoPersistido: listaDestinos){
+
+                if(destinoPersistido.getCiudad().equalsIgnoreCase(ciudad)){
                     return listaDestinos.indexOf(destinoPersistido);
                 }
 
