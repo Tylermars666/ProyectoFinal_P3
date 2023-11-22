@@ -54,9 +54,9 @@ public class CreadorDB {
         listaReservas.add(new Reserva(LocalDate.parse("2023-10-30"),LocalDate.parse("2023-11-15"),cliente,4,paquete,guia,"Confirmada"));
         listaComentarios.add(new Comentario("Chimba de destino",cliente,paquete));
 
-        /*ObjectOutputStream listaPersistida = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+        ObjectOutputStream listaPersistida = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
         listaPersistida.writeObject(listaDestinos);
-        listaPersistida.flush();*/
+        listaPersistida.flush();
 
 
         ObjectInputStream listaObtenida = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));

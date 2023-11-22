@@ -44,11 +44,45 @@ public class DestinoImplement implements CRUD{
 
     @Override
     public Object eliminar(Object objeto) {
-        return false;
+
+        ArrayList<Destino> listaDestinos;
+
+        try{
+
+            ObjectInputStream objetoListado = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            listaDestinos = (ArrayList<Destino>) objetoListado.readObject();
+            boolean existe = existeDestino((Destino) objeto);
+            objetoListado.close();
+
+            if(existe){
+
+                int indiceDestino = match((Destino) objeto);
+                listaDestinos.remove(indiceDestino);
+                ObjectOutputStream listaDestinosParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+                listaDestinosParaGuardar.writeObject(listaDestinos);
+                listaDestinosParaGuardar.flush();
+                listaDestinosParaGuardar.close();
+                return new Response("eliminado",objeto);
+            }else {
+
+                return new Response("no existe",objeto);
+
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+
+
     }
 
     @Override
     public Object editar(Object objeto) {
+
+
         return false;
     }
 
@@ -85,14 +119,39 @@ public class DestinoImplement implements CRUD{
 
             }
 
-            return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return false;
+
+    }
+
+    public int match(Destino destino){
+
+        try{
+
+            ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            ArrayList<Destino> listaDestinos = (ArrayList<Destino>) objeto.readObject();
+
+            for(Destino destinoPersistido: listaDestinos){
+
+                if(destinoPersistido.getNombre().equalsIgnoreCase(destino.getNombre())){
+                    return listaDestinos.indexOf(destinoPersistido);
+                }
+
+            }
+
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
 
-        return true;
+        return -1;
 
     }
+
+
 }

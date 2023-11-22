@@ -148,8 +148,35 @@ public class DestinosController implements Initializable {
         Destino destinoSeleccionado = this.tblDestino.getSelectionModel().getSelectedItem();
 
         if(destinoSeleccionado!=null){
+            try{
 
-            
+                DataPaquete paquete = new DataPaquete("destino","eliminar",destinoSeleccionado);
+                Socket socket = new Socket("localhost",9595);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                objectOutputStream.writeObject(paquete);
+
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                Response response = (Response) objectInputStream.readObject();
+
+                objectInputStream.close();
+                objectOutputStream.close();
+                socket.close();
+
+                if(response.getMensaje().equalsIgnoreCase("eliminado")){
+
+                    new Alert(Alert.AlertType.CONFIRMATION,"Destino eliminado con exito",ButtonType.OK).showAndWait();
+                    updateList();
+                }else{
+
+                    new Alert(Alert.AlertType.ERROR,"El destino que tratar de eliminar, no existe en la base de datos",ButtonType.OK).showAndWait();
+
+                }
+
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
 
