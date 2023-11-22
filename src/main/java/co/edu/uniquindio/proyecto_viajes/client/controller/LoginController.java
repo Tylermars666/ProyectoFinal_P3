@@ -2,8 +2,8 @@ package co.edu.uniquindio.proyecto_viajes.client.controller;
 
 import co.edu.uniquindio.proyecto_viajes.DataPaquete;
 import co.edu.uniquindio.proyecto_viajes.admin.controller.AdministradorController;
-import co.edu.uniquindio.proyecto_viajes.admin.model.AdminLogeado;
-import co.edu.uniquindio.proyecto_viajes.client.logic.ClienteLogeado;
+import co.edu.uniquindio.proyecto_viajes.admin.model.Administrador;
+import co.edu.uniquindio.proyecto_viajes.client.model.Cliente;
 import co.edu.uniquindio.proyecto_viajes.serverDataBase.logic.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -37,8 +38,8 @@ public class LoginController implements Initializable {
 
     private String rolSeleccionado;
 
-    public static ClienteLogeado clienteLogeado;
-    public static AdminLogeado adminLogeado;
+    public static Cliente clienteLogeado;
+    public static Administrador adminLogeado;
 
     @FXML
     void abrirVentanaRegistro(MouseEvent event) throws Exception {
@@ -63,78 +64,98 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void iniciarSesion(ActionEvent event) throws Exception {
+    void iniciarSesion(ActionEvent event){
 
         String correo, identificacion;
         correo = this.txtCorreo.getText();
         identificacion = this.txtIdentificacion.getText();
+        ArrayList<String> datosLogin = new ArrayList<>();
+        datosLogin.add(correo);
+        datosLogin.add(identificacion);
 
         if(correo.isBlank() || identificacion.isBlank()){
             new Alert(Alert.AlertType.ERROR,"Valide los datos ingresados", ButtonType.OK).showAndWait();
         }else{
 
-            if(!rolSeleccionado.isBlank()){
+            if(rolSeleccionado!=null){
 
 
                 if(rolSeleccionado.equalsIgnoreCase("cliente")){
 
-                    Socket socket = new Socket("localhost",9595);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                    try{
+                        Socket socket = new Socket("localhost",9595);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-                    DataPaquete paquete = new DataPaquete("cliente","listar",identificacion);
-                    objectOutputStream.writeObject(paquete);
-                    objectOutputStream.flush();
 
-                    Response response = (Response) objectInputStream.readObject();
-                    objectInputStream.close();
-                    objectOutputStream.close();
-                    socket.close();
+                        DataPaquete paquete = new DataPaquete("cliente","listar",datosLogin);
+                        objectOutputStream.writeObject(paquete);
 
-                    if(response.getMensaje().equalsIgnoreCase("valido")){
 
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/principal-view.fxml"));
+                        ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                        Response response = (Response) objectInputStream.readObject();
 
-                        Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-                        stage.setTitle("Principal");
-                        stage.setScene(scene);
+                        objectInputStream.close();
+                        socket.close();
 
-                        PrincipalController controller = loader.getController();
-                        stage.show();
-                    }else{
-                        new Alert(Alert.AlertType.ERROR,"El cliente ingresado no existe", ButtonType.OK).showAndWait();
+                        if(response.getMensaje().equalsIgnoreCase("valido")){
+
+                            clienteLogeado = (Cliente) response.getObjetoRespuesta();
+
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/client/view/principal-view.fxml"));
+
+                            Scene scene = new Scene(loader.load());
+                            Stage stage = new Stage();
+                            stage.setTitle("Principal");
+                            stage.setScene(scene);
+
+                            PrincipalController controller = loader.getController();
+                            stage.show();
+                        }else{
+                            new Alert(Alert.AlertType.ERROR,"El cliente ingresado no existe", ButtonType.OK).showAndWait();
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
+
 
 
                 }else{
 
-                    Socket socket = new Socket("localhost",9595);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                    try{
+                        Socket socket = new Socket("localhost",9595);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-                    DataPaquete paquete = new DataPaquete("admin","listar",identificacion);
-                    objectOutputStream.writeObject(paquete);
-                    objectOutputStream.flush();
 
-                    Response response = (Response) objectInputStream.readObject();
-                    objectInputStream.close();
-                    objectOutputStream.close();
-                    socket.close();
+                        DataPaquete paquete = new DataPaquete("admin","listar",datosLogin);
+                        objectOutputStream.writeObject(paquete);
 
-                    if(response.getMensaje().equalsIgnoreCase("valido")){
+                        ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                        Response response = (Response) objectInputStream.readObject();
 
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/admin/view/admin-view.fxml"));
+                        objectInputStream.close();
+                        objectOutputStream.close();
+                        socket.close();
 
-                        Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-                        stage.setTitle("Administrador");
-                        stage.setScene(scene);
+                        if(response.getMensaje().equalsIgnoreCase("valido")){
 
-                        AdministradorController controller = loader.getController();
-                        stage.show();
-                    }else{
-                        new Alert(Alert.AlertType.ERROR,"El admin ingresado no existe", ButtonType.OK).showAndWait();
+                            adminLogeado = (Administrador) response.getObjetoRespuesta();
+
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/proyecto_viajes/admin/view/admin-view.fxml"));
+
+                            Scene scene = new Scene(loader.load());
+                            Stage stage = new Stage();
+                            stage.setTitle("Administrador");
+                            stage.setScene(scene);
+
+                            AdministradorController controller = loader.getController();
+                            stage.show();
+                        }else{
+                            new Alert(Alert.AlertType.ERROR,"El admin ingresado no existe", ButtonType.OK).showAndWait();
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
 
                 }
