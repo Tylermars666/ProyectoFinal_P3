@@ -67,6 +67,8 @@ public class DestinosController implements Initializable {
 
     private ObservableList<Destino> destinosObservables;
 
+    private ArrayList<Destino> destinosActualizados;
+
     @FXML
     void agregarDestino(ActionEvent event) {
 
@@ -102,19 +104,22 @@ public class DestinosController implements Initializable {
 
             ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
             Response response = (Response) flujoEntrada.readObject();
+            ArrayList<Destino> destinosRecibidos = (ArrayList<Destino>) response.getObjetoRespuesta();
 
             flujoSalida.close();
             flujoEntrada.close();
+            socket.close();
 
             if(response.getMensaje().equalsIgnoreCase("guardado")){
                 new Alert(Alert.AlertType.CONFIRMATION,"Destino agregado con éxito").showAndWait();
-                destinosObservables = FXCollections.observableArrayList();
-                this.colNombreDestino.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-                this.colCiudadDestino.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
-                this.colClimaDestino.setCellValueFactory(new PropertyValueFactory<>("clima"));
-
-                this.destinosObservables.addAll(destinoCreado);
-                this.tblDestino.setItems(destinosObservables);
+                this.txtCiudadDestino.clear();
+                this.txtClimaDestino.clear();
+                this.txtDescripcionDestino.clear();
+                this.txtNombreDestino.clear();
+                this.txtRutaImg1.clear();
+                this.txtRutaImg2.clear();
+                this.txtRutaImg3.clear();
+                updateList();
             }else{
                 throw new RegistroExistenteException();
             }
@@ -202,8 +207,48 @@ public class DestinosController implements Initializable {
 
     }
 
+    public void updateList(){
+
+        try{
+
+            Socket socket = new Socket("localhost",9595);
+
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            DataPaquete dataPaquete = new DataPaquete("destino","listar",null);
+            objectOutputStream.writeObject(dataPaquete);
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+
+            ArrayList<Destino> destinoRecibido = (ArrayList<Destino>) objectInputStream.readObject();
+
+            objectOutputStream.close();
+            objectInputStream.close();
+            socket.close();
+
+            this.destinosActualizados = destinoRecibido;
+
+            destinosObservables = FXCollections.observableArrayList();
+            this.colNombreDestino.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            this.colCiudadDestino.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+            this.colClimaDestino.setCellValueFactory(new PropertyValueFactory<>("clima"));
+
+            this.destinosObservables.addAll(this.destinosActualizados);
+            this.tblDestino.setItems(destinosObservables);
+
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        updateList();
 
     }
 }

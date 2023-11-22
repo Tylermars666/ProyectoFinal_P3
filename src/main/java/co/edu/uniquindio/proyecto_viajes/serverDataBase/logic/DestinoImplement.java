@@ -29,7 +29,7 @@ public class DestinoImplement implements CRUD{
                 ObjectOutputStream listaDestinosParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
                 listaDestinosParaGuardar.writeObject(destinosPersistidos);
 
-                response = new Response("guardado",objeto);
+                response = new Response("guardado",destinosPersistidos);
             }
 
 
@@ -54,7 +54,20 @@ public class DestinoImplement implements CRUD{
 
     @Override
     public Object listar(Object objeto) {
-        return null;
+
+        ArrayList<Destino> listaDestinos = null;
+
+        try{
+
+            ObjectInputStream objetoListado = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/destinos/listaDestinos"));
+            listaDestinos = (ArrayList<Destino>) objetoListado.readObject();
+            return listaDestinos;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return listaDestinos;
     }
 
     public boolean existeDestino(Destino destino){
