@@ -20,6 +20,9 @@ public class ClienteImplement implements CRUD {
 
     @Override
     public Object listar(Object objeto) {
+
+
+
         return null;
     }
 }
