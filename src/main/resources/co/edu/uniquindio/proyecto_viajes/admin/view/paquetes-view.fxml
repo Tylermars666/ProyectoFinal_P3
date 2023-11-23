@@ -2,14 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.PaquetesController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto_viajes.admin.controller.PaquetesController">
    <children>
       <TableView fx:id="tblPaquetes" layoutX="50.0" layoutY="35.0" onMouseClicked="#seleccionarPaquete" prefHeight="200.0" prefWidth="398.0">
         <columns>
@@ -29,5 +29,19 @@
       <Button layoutX="50.0" layoutY="490.0" mnemonicParsing="false" onAction="#agregarPaquete" text="Agregar paquete" />
       <Button layoutX="193.0" layoutY="490.0" mnemonicParsing="false" onAction="#editarPaquete" text="Editar paquete" />
       <Button layoutX="328.0" layoutY="490.0" mnemonicParsing="false" onAction="#eliminarPaquete" text="Eliminar paquete" />
+      <Label layoutX="504.0" layoutY="14.0" text="Destinos disponibles" />
+      <Label layoutX="498.0" layoutY="287.0" text="Destinos seleccionados" />
+      <TableView fx:id="tblDestinosDisponible" layoutX="459.0" layoutY="35.0" onMouseClicked="#seleccionarDestino" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="colCiudadDisponible" prefWidth="97.60003662109375" text="Ciudad" />
+          <TableColumn fx:id="colClimaDisponible" prefWidth="101.60003662109375" text="Clima" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tblDestinosSeleccionados" layoutX="459.0" layoutY="316.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="colCiudadSeleccionada" prefWidth="97.60003662109375" text="Ciudad" />
+          <TableColumn fx:id="colClimaSeleccionado" prefWidth="102.39996337890625" text="Clima" />
+        </columns>
+      </TableView>
    </children>
 </Pane>
