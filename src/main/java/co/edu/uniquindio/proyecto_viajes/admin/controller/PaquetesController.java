@@ -176,10 +176,113 @@ public class PaquetesController implements Initializable {
     @FXML
     void editarPaquete(ActionEvent event) {
 
+        Paquete paqueteSeleccionado = this.tblPaquetes.getSelectionModel().getSelectedItem();
+
+        if(paqueteSeleccionado!=null){
+
+            nombre = this.txtNombrePaquete.getText();
+            duracion = this.txtDuracionPaquete.getText();
+            precio = this.txtPrecioPaquete.getText();
+            cupo = this.txtCupoPaquete.getText();
+            servicios = this.txtServiciosAdicionales.getText();
+
+            if(servicios.isBlank()||nombre.isBlank()||duracion.isBlank()||precio.isBlank()||cupo.isBlank()||fechaSeleccionada==null||destinosSeleccionadosArray==null){
+                new Alert(Alert.AlertType.ERROR,"Asegurese de llenar todos los campos",ButtonType.OK).showAndWait();
+            }else{
+
+                try{
+
+                    String nombrePaqueteSeleccionado = paqueteSeleccionado.getNombre();
+                    Paquete paqueteNuevo = new Paquete(nombre,Integer.parseInt(duracion),servicios,Double.parseDouble(precio),Integer.parseInt(cupo),fechaSeleccionada,destinosSeleccionadosArray);
+                    ArrayList<Object> nombreViejoPaqueteNuevo = new ArrayList<>();
+                    nombreViejoPaqueteNuevo.add(nombrePaqueteSeleccionado);
+                    nombreViejoPaqueteNuevo.add(paqueteNuevo);
+
+                    DataPaquete paquete = new DataPaquete("paquete","editar",nombreViejoPaqueteNuevo);
+
+                    Socket socket = new Socket("localhost",9595);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(paquete);
+
+                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                    Response response = (Response) objectInputStream.readObject();
+
+                    objectInputStream.close();
+                    objectOutputStream.close();
+                    socket.close();
+
+                    if(response.getMensaje().equalsIgnoreCase("editado")){
+                        new Alert(Alert.AlertType.CONFIRMATION,"Paquete editado con exito",ButtonType.OK).showAndWait();
+                        this.txtNombrePaquete.clear();
+                        this.txtCupoPaquete.clear();
+                        this.txtDuracionPaquete.clear();
+                        this.txtPrecioPaquete.clear();
+                        this.txtServiciosAdicionales.clear();
+                        this.destinosSeleccionadosArray.clear();
+                        this.destinosObservablesSeleccionados.clear();
+                        this.tblDestinosSeleccionados.refresh();
+                        updateList();
+                    }else{
+
+                        new Alert(Alert.AlertType.ERROR,"No se pudo editar el destino",ButtonType.OK).showAndWait();
+
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+
     }
 
     @FXML
     void eliminarPaquete(ActionEvent event) {
+
+        Paquete paqueteSeleccionado = this.tblPaquetes.getSelectionModel().getSelectedItem();
+
+        if(paqueteSeleccionado!=null){
+            try{
+
+                DataPaquete paquete = new DataPaquete("paquete","eliminar",paqueteSeleccionado);
+                Socket socket = new Socket("localhost",9595);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                objectOutputStream.writeObject(paquete);
+
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                Response response = (Response) objectInputStream.readObject();
+
+                objectInputStream.close();
+                objectOutputStream.close();
+                socket.close();
+
+                if(response.getMensaje().equalsIgnoreCase("eliminado")){
+
+                    new Alert(Alert.AlertType.CONFIRMATION,"Paquete eliminado con exito",ButtonType.OK).showAndWait();
+                    this.txtNombrePaquete.clear();
+                    this.txtCupoPaquete.clear();
+                    this.txtDuracionPaquete.clear();
+                    this.txtPrecioPaquete.clear();
+                    this.txtServiciosAdicionales.clear();
+                    this.destinosSeleccionadosArray.clear();
+                    this.destinosObservablesSeleccionados.clear();
+                    this.tblDestinosSeleccionados.refresh();
+                    updateList();
+                }else{
+
+                    new Alert(Alert.AlertType.ERROR,"El paquete que tratar de eliminar no existe en la base de datos",ButtonType.OK).showAndWait();
+
+                }
+
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
