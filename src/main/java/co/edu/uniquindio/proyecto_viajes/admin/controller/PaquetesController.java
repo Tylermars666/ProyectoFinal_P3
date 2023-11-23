@@ -3,6 +3,8 @@ package co.edu.uniquindio.proyecto_viajes.admin.controller;
 import co.edu.uniquindio.proyecto_viajes.DataPaquete;
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 import co.edu.uniquindio.proyecto_viajes.client.model.Paquete;
+import co.edu.uniquindio.proyecto_viajes.exception.RegistroExistenteException;
+import co.edu.uniquindio.proyecto_viajes.serverDataBase.logic.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,10 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -98,12 +103,73 @@ public class PaquetesController implements Initializable {
 
     LocalDate fechaSeleccionada;
 
+    String nombre, duracion, precio, cupo, servicios;
+
+
+
 
 
     @FXML
     void agregarPaquete(ActionEvent event) {
 
-        
+        try{           //SERVIDOR EN LOCALHOST EN ESTE CASO
+            Socket socket = new Socket("localhost",9595);
+
+
+            nombre = this.txtNombrePaquete.getText();
+            duracion = this.txtDuracionPaquete.getText();
+            precio = this.txtPrecioPaquete.getText();
+            cupo = this.txtCupoPaquete.getText();
+            servicios = this.txtServiciosAdicionales.getText();
+
+            if(servicios.isBlank()||nombre.isBlank()||duracion.isBlank()||precio.isBlank()||cupo.isBlank()||fechaSeleccionada==null||destinosSeleccionadosArray==null){
+                new Alert(Alert.AlertType.ERROR,"Asegurese de llenar todos los campos",ButtonType.OK).showAndWait();
+            }else{
+
+
+                Paquete paqueteCreado = new Paquete(nombre,Integer.parseInt(duracion),servicios,Double.parseDouble(precio),Integer.parseInt(cupo),fechaSeleccionada,destinosSeleccionadosArray);
+                DataPaquete paqueteDatos = new DataPaquete("paquete","crear",paqueteCreado);
+
+
+                ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
+                flujoSalida.writeObject(paqueteDatos);
+                flujoSalida.flush();
+
+
+                ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
+                Response response = (Response) flujoEntrada.readObject();
+                ArrayList<Paquete> paquetesRecibidos = (ArrayList<Paquete>) response.getObjetoRespuesta();
+
+                flujoSalida.close();
+                flujoEntrada.close();
+                socket.close();
+
+                if(response.getMensaje().equalsIgnoreCase("guardado")){
+                    new Alert(Alert.AlertType.CONFIRMATION,"Paquete agregado con éxito").showAndWait();
+                    this.txtNombrePaquete.clear();
+                    this.txtCupoPaquete.clear();
+                    this.txtDuracionPaquete.clear();
+                    this.txtPrecioPaquete.clear();
+                    this.txtServiciosAdicionales.clear();
+                    this.destinosSeleccionadosArray.clear();
+                    this.destinosObservablesSeleccionados.clear();
+                    this.tblDestinosSeleccionados.refresh();
+
+                    updateList();
+                }else{
+                    throw new RegistroExistenteException();
+                }
+            }
+
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }catch (RegistroExistenteException e){
+            e.getAlert().showAndWait();
+        }
 
     }
 
