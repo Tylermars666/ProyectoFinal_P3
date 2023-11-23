@@ -45,7 +45,36 @@ public class PaqueteImplement implements CRUD{
 
     @Override
     public Object eliminar(Object objeto) {
-        return false;
+        ArrayList<Paquete> listaPaquetes;
+
+        try{
+
+            ObjectInputStream objetoListado = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/paquetes/listaPaquetes"));
+            listaPaquetes = (ArrayList<Paquete>) objetoListado.readObject();
+            boolean existe = existePaquete((Paquete) objeto);
+            objetoListado.close();
+
+            if(existe){
+
+                int indicePaquete = match((Paquete) objeto);
+                listaPaquetes.remove(indicePaquete);
+                ObjectOutputStream listaPaquetesParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/paquetes/listaPaquetes"));
+                listaPaquetesParaGuardar.writeObject(listaPaquetes);
+                listaPaquetesParaGuardar.flush();
+                listaPaquetesParaGuardar.close();
+                return new Response("eliminado",objeto);
+            }else {
+
+                return new Response("no existe",objeto);
+
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
@@ -113,6 +142,30 @@ public class PaqueteImplement implements CRUD{
             for(Paquete paquete: listaPaquetes){
 
                 if(paquete.getNombre().equalsIgnoreCase(nombre)){
+                    return true;
+                }
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return false;
+
+    }
+
+    public boolean existePaquete(Paquete paquete){
+
+        try{
+
+            ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/paquetes/listaPaquetes"));
+            ArrayList<Paquete> listaPaquetes = (ArrayList<Paquete>) objeto.readObject();
+
+            for(Paquete paquetePersistido: listaPaquetes){
+
+                if(paquetePersistido.getNombre().equalsIgnoreCase(paquete.getNombre())){
                     return true;
                 }
 
