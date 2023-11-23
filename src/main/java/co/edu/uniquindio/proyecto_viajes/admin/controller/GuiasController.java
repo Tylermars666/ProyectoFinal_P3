@@ -19,6 +19,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -59,6 +61,7 @@ public class GuiasController implements Initializable {
     private ArrayList<Guia> guiasActualizados;
 
     private ObservableList<Guia> guiasObservables;
+
 
     @FXML
     void agregarGuia(ActionEvent event) {
@@ -127,6 +130,72 @@ public class GuiasController implements Initializable {
 
     @FXML
     void editarGuia(ActionEvent event) {
+
+        Guia guiaSeleccionado = this.tblGuias.getSelectionModel().getSelectedItem();
+
+        if(guiaSeleccionado!=null){
+
+            nombre = this.txtNombreGuia.getText();
+            identificacion = this.txtIdentificacionGuia.getText();
+            experiencia = this.txtExperienciaGuia.getText();
+            idioma1 = this.txtIdioma1Guia.getText();
+            idioma2 = this.txtIdioma2Guia.getText();
+            idioma3 = this.txtIdioma3Guia.getText();
+
+
+            if(nombre.isBlank()||identificacion.isBlank()||experiencia.isBlank()||idioma1.isBlank()||idioma2.isBlank()||idioma3.isBlank()){
+                new Alert(Alert.AlertType.ERROR,"Asegurese de llenar todos los campos", ButtonType.OK).showAndWait();
+            }else{
+
+                try{
+
+                    ArrayList<String> idiomasGuia = new ArrayList<>();
+                    idiomasGuia.add(idioma1);
+                    idiomasGuia.add(idioma2);
+                    idiomasGuia.add(idioma3);
+
+
+                    String identificacionGuiaSeleccionado = guiaSeleccionado.getIdentificacion();
+                    Guia guiaNuevo = new Guia(nombre,identificacion,idiomasGuia,Integer.parseInt(experiencia));
+                    ArrayList<Object> idViejoGuiaNuevo = new ArrayList<>();
+                    idViejoGuiaNuevo.add(identificacionGuiaSeleccionado);
+                    idViejoGuiaNuevo.add(guiaNuevo);
+
+                    DataPaquete paquete = new DataPaquete("guia","editar",idViejoGuiaNuevo);
+
+                    Socket socket = new Socket("localhost",9595);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(paquete);
+
+                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                    Response response = (Response) objectInputStream.readObject();
+
+                    objectInputStream.close();
+                    objectOutputStream.close();
+                    socket.close();
+
+                    if(response.getMensaje().equalsIgnoreCase("editado")){
+                        new Alert(Alert.AlertType.CONFIRMATION,"Guia editado con exito",ButtonType.OK).showAndWait();
+                        this.txtNombreGuia.clear();
+                        this.txtExperienciaGuia.clear();
+                        this.txtIdentificacionGuia.clear();
+                        this.txtIdioma1Guia.clear();
+                        this.txtIdioma2Guia.clear();
+                        this.txtIdioma3Guia.clear();
+                        updateList();
+                    }else{
+
+                        new Alert(Alert.AlertType.ERROR,"No se pudo editar el guia",ButtonType.OK).showAndWait();
+
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
 
     }
 
