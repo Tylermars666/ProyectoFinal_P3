@@ -13,17 +13,15 @@
    <children>
       <TextField fx:id="txtCantidadPersonas" layoutX="50.0" layoutY="49.0" promptText="Cantidad personas" />
       <DatePicker fx:id="dateFechaPlanificada" layoutX="251.0" layoutY="49.0" onAction="#elegirFechaReserva" promptText="Fecha planificada" />
-      <TableView fx:id="tblReservas" layoutX="50.0" layoutY="202.0" prefHeight="200.0" prefWidth="380.0">
+      <TableView fx:id="tblReservas" layoutX="50.0" layoutY="202.0" onMouseClicked="#seleccionarReserva" prefHeight="200.0" prefWidth="380.0">
         <columns>
-          <TableColumn fx:id="colFechaSolicitud" prefWidth="112.00000762939453" text="Fecha de solicitud" />
-          <TableColumn fx:id="colFechaPlanificada" prefWidth="103.20001220703125" text="Fecha planificada" />
-            <TableColumn fx:id="colNombreGuia" prefWidth="75.0" text="Guia" />
-            <TableColumn fx:id="colEstadoReserva" prefWidth="87.19998168945312" text="Estado reserva" />
+          <TableColumn fx:id="colFechaSolicitud" prefWidth="130.39996719360352" text="Fecha de solicitud" />
+          <TableColumn fx:id="colFechaPlanificada" prefWidth="116.00004577636719" text="Fecha planificada" />
+            <TableColumn fx:id="colEstadoReserva" prefWidth="133.60003662109375" text="Estado reserva" />
         </columns>
       </TableView>
       <ComboBox fx:id="cmbListaGuias" layoutX="50.0" layoutY="122.0" onAction="#elegirGuia" prefHeight="25.0" prefWidth="149.0" promptText="Elegir guia" />
       <Button layoutX="489.0" layoutY="277.0" mnemonicParsing="false" onAction="#agregarReserva" prefHeight="25.0" prefWidth="175.0" text="Agregar reserva" />
-      <TextField fx:id="txtNumReserva" layoutX="165.0" layoutY="430.0" />
       <Button layoutX="489.0" layoutY="363.0" mnemonicParsing="false" onAction="#cancelarReserva" prefHeight="25.0" prefWidth="175.0" text="Cancelar reserva" />
       <TableView fx:id="tblPaquetes" layoutX="489.0" layoutY="51.0" onMouseClicked="#seleccionarPaquete" prefHeight="157.0" prefWidth="175.0">
         <columns>
