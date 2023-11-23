@@ -4,13 +4,43 @@ import co.edu.uniquindio.proyecto_viajes.client.model.Cliente;
 import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class ClienteImplement implements CRUD {
     @Override
     public Object crear(Object objeto) {
-        return false;
+
+        Response response = null;
+        Cliente cliente = (Cliente) objeto;
+
+        try{
+
+            if(existeCliente(cliente.getIdentificacion())){
+
+                response = new Response("existe",objeto);
+
+            }else{
+
+                ObjectInputStream objetoPersistido = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/clientes/listaClientes"));
+                ArrayList<Cliente> clientesPersistidos = (ArrayList<Cliente>) objetoPersistido.readObject();
+                clientesPersistidos.add((Cliente) objeto);
+
+                ObjectOutputStream listaDestinosParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/clientes/listaClientes"));
+                listaDestinosParaGuardar.writeObject(clientesPersistidos);
+
+                response = new Response("registrado",clientesPersistidos);
+            }
+
+
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        return response;
+
     }
 
     @Override
