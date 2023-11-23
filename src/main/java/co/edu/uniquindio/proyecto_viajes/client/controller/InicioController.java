@@ -150,7 +150,7 @@ public class InicioController implements Initializable {
             imgCont = 2;
         }
 
-        this.imgImagenCiudad.setImage(new Image(new ByteArrayInputStream(destinoSeleccionado.getImagenes().get(0))));
+        this.imgImagenCiudad.setImage(new Image(new ByteArrayInputStream(destinoSeleccionado.getImagenes().get(imgCont))));
 
     }
 
