@@ -14,11 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 public class InicioController implements Initializable {
 
     @FXML
-    private ComboBox<?> cmbFiltroBusqueda;
+    private ComboBox<String> cmbFiltroBusqueda;
 
     @FXML
     private TableColumn<?, ?> colCiudad;
@@ -76,11 +76,16 @@ public class InicioController implements Initializable {
     @FXML
     private Button btnSiguiente;
 
+    private String valor_filtro;
+    private String filtroSeleccionado;
+
     @FXML
     private Label lblDescripcion;
 
     private ObservableList<Paquete> paquetesObservables;
     private ObservableList<Destino> destinosObservables;
+    private ObservableList<String>opcionesFiltro;
+    private ObservableList<Paquete> filtroObservablePaquete;
     private ArrayList<Paquete>paquetesActualizados;
     private Destino destinoSeleccionado;
     private int imgCont=1;
@@ -138,6 +143,28 @@ public class InicioController implements Initializable {
 
     @FXML
     void seleccionarFiltro(ActionEvent event) {
+
+        filtroSeleccionado = cmbFiltroBusqueda.getSelectionModel().getSelectedItem();
+
+    }
+
+    @FXML
+    void filtrarTexto(KeyEvent event) {
+
+        switch (filtroSeleccionado){
+
+            case "Precio":
+                filtrarPorPrecio();
+                break;
+
+            case "Duracion":
+                filtrarPorDuracion();
+                break;
+            case "Cupo":
+                filtrarPorCupo();
+                break;
+
+        }
 
     }
 
@@ -210,13 +237,71 @@ public class InicioController implements Initializable {
 
     }
 
+    public void filtrarPorPrecio() {
+
+        valor_filtro = this.txtBusqueda.getText();
+        if (valor_filtro.isEmpty()) {
+            this.tblPaquetes.setItems(paquetesObservables);
+        } else {
+            this.filtroObservablePaquete.clear();
+            for (Paquete paquete : this.paquetesObservables) {
+                if (String.valueOf(paquete.getPrecio()).equalsIgnoreCase(valor_filtro)) {
+                    this.filtroObservablePaquete.add(paquete);
+                }
+            }
+            this.tblPaquetes.setItems(filtroObservablePaquete);
+        }
+
+    }
+
+    public void filtrarPorDuracion(){
+
+        valor_filtro = this.txtBusqueda.getText();
+        if (valor_filtro.isEmpty()) {
+            this.tblPaquetes.setItems(paquetesObservables);
+        } else {
+            this.filtroObservablePaquete.clear();
+            for (Paquete paquete : this.paquetesObservables) {
+                if (paquete.getDuracion()==Integer.parseInt(valor_filtro)) {
+                    this.filtroObservablePaquete.add(paquete);
+                }
+            }
+            this.tblPaquetes.setItems(filtroObservablePaquete);
+        }
+
+    }
+
+    public void filtrarPorCupo(){
+
+        valor_filtro = this.txtBusqueda.getText();
+        if (valor_filtro.isEmpty()) {
+            this.tblPaquetes.setItems(paquetesObservables);
+        } else {
+            this.filtroObservablePaquete.clear();
+            for (Paquete paquete : this.paquetesObservables) {
+                if (paquete.getCupoMax()==Integer.parseInt(valor_filtro)) {
+                    this.filtroObservablePaquete.add(paquete);
+                }
+            }
+            this.tblPaquetes.setItems(filtroObservablePaquete);
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        opcionesFiltro = FXCollections.observableArrayList("Precio","Duracion","Cupo");
+        cmbFiltroBusqueda.setItems(opcionesFiltro);
+        filtroObservablePaquete = FXCollections.observableArrayList();
+
 
         this.txtADescripcionDestino.setVisible(false);
         this.btnAnterior.setVisible(false);
         this.btnSiguiente.setVisible(false);
         this.lblDescripcion.setVisible(false);
+
+
 
         updateList();
 
