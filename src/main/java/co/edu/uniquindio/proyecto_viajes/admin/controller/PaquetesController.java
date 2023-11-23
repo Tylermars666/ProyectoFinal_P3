@@ -8,12 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -21,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -86,20 +82,28 @@ public class PaquetesController implements Initializable {
     private TableView<Destino> tblDestinosDisponible;
 
     @FXML
-    private TableView<?> tblDestinosSeleccionados;
+    private TableView<Destino> tblDestinosSeleccionados;
 
     ArrayList<Paquete> paquetesActualizados;
 
     ArrayList<Destino> destinosActualizados;
 
+    ArrayList<Destino> destinosSeleccionadosArray;
+
     ObservableList<Paquete> paquetesObservables;
 
     ObservableList<Destino> destinosObservables;
+
+    ObservableList<Destino> destinosObservablesSeleccionados;
+
+    LocalDate fechaSeleccionada;
 
 
 
     @FXML
     void agregarPaquete(ActionEvent event) {
+
+        
 
     }
 
@@ -116,15 +120,46 @@ public class PaquetesController implements Initializable {
     @FXML
     void seleccionarFechaPaquete(ActionEvent event) {
 
+        fechaSeleccionada = this.dateFechaPaquete.getValue();
+
     }
 
     @FXML
     void seleccionarPaquete(MouseEvent event) {
 
+        Paquete paqueteSeleccionado = this.tblPaquetes.getSelectionModel().getSelectedItem();
+
+        if(paqueteSeleccionado!=null){
+
+            this.txtNombrePaquete.setText(paqueteSeleccionado.getNombre());
+            this.txtDuracionPaquete.setText(String.valueOf(paqueteSeleccionado.getDuracion()));
+            this.txtPrecioPaquete.setText(String.valueOf(paqueteSeleccionado.getPrecio()));
+            this.txtCupoPaquete.setText(String.valueOf(paqueteSeleccionado.getCupoMax()));
+            this.txtServiciosAdicionales.setText(paqueteSeleccionado.getServiciosAdicionales());
+
+        }
     }
 
     @FXML
     void seleccionarDestino(MouseEvent event) {
+
+        Destino destinoSeleccionado = this.tblDestinosDisponible.getSelectionModel().getSelectedItem();
+
+        if(destinoSeleccionado!=null){
+
+            if(!existeDestinoEnArray(destinoSeleccionado)){
+
+
+                this.colCiudadSeleccionada.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+                this.colClimaSeleccionado.setCellValueFactory(new PropertyValueFactory<>("clima"));
+                destinosObservablesSeleccionados.add(destinoSeleccionado);
+                this.tblDestinosSeleccionados.setItems(destinosObservablesSeleccionados);
+                destinosSeleccionadosArray.add(destinoSeleccionado);
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Ya agregaste este destino al paquete",ButtonType.OK).showAndWait();
+            }
+
+        }
 
     }
 
@@ -133,6 +168,25 @@ public class PaquetesController implements Initializable {
 
         updateList();
         updateListDestinos();
+        destinosObservablesSeleccionados = FXCollections.observableArrayList();
+        destinosSeleccionadosArray = new ArrayList<>();
+
+    }
+
+    public boolean existeDestinoEnArray(Destino destino){
+
+        if(destinosSeleccionadosArray!=null){
+
+            for(Destino destinoArray: destinosSeleccionadosArray){
+
+                if(destinoArray.equals(destino)){
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
 
     }
 
@@ -161,8 +215,8 @@ public class PaquetesController implements Initializable {
             this.colNombrePaquete.setCellValueFactory(new PropertyValueFactory<>("nombre"));
             this.colDuracionPaquete.setCellValueFactory(new PropertyValueFactory<>("duracion"));
             this.colPrecioPaquete.setCellValueFactory(new PropertyValueFactory<>("precio"));
-            this.colCupoPaquete.setCellValueFactory(new PropertyValueFactory<>("cupo"));
-            this.colFechaPaquete.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+            this.colCupoPaquete.setCellValueFactory(new PropertyValueFactory<>("cupoMax"));
+            this.colFechaPaquete.setCellValueFactory(new PropertyValueFactory<>("fechaLimite"));
 
 
             this.paquetesObservables.addAll(this.paquetesActualizados);
