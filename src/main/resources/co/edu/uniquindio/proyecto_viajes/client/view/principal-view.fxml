@@ -18,7 +18,7 @@
                 <Image url="@../../images/logo.png" />
             </image>
         </ImageView>
-        <TextField fx:id="txtBusqueda" layoutX="179.0" layoutY="125.0" prefHeight="25.0" prefWidth="183.0" promptText="¿Que estás buscando?" />
+        <TextField fx:id="txtBusqueda" layoutX="179.0" layoutY="125.0" onKeyReleased="#filtrarTexto" prefHeight="25.0" prefWidth="183.0" promptText="¿Que estás buscando?" />
         <ComboBox fx:id="cmbFiltroBusqueda" layoutX="179.0" layoutY="77.0" onAction="#seleccionarFiltro" prefWidth="150.0" promptText="Filtro de busqueda" />
         <Button layoutX="383.0" layoutY="125.0" mnemonicParsing="false" onAction="#buscar" prefHeight="25.0" prefWidth="86.0" text="Buscar" />
         <TableView fx:id="tblPaquetes" layoutX="22.0" layoutY="211.0" onMouseClicked="#seleccionarDestino" prefHeight="200.0" prefWidth="396.0">
