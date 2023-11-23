@@ -1,7 +1,6 @@
 package co.edu.uniquindio.proyecto_viajes.client.controller;
 
 import co.edu.uniquindio.proyecto_viajes.DataPaquete;
-import co.edu.uniquindio.proyecto_viajes.client.model.Destino;
 import co.edu.uniquindio.proyecto_viajes.client.model.Guia;
 import co.edu.uniquindio.proyecto_viajes.client.model.Paquete;
 import co.edu.uniquindio.proyecto_viajes.client.model.Reserva;
@@ -83,30 +82,36 @@ public class ReservaController implements Initializable {
                 new Alert(Alert.AlertType.ERROR,"Asegurese de llenar todos los campos",ButtonType.OK).showAndWait();
             }else{
 
-
-                Reserva reservaCreada = new Reserva(LocalDate.now(),fechaPlanificada,LoginController.clienteLogeado,Integer.parseInt(cantidadPersonas),paqueteSeleccionado,new Guia(guiaSeleccionado,"9988",null,7),"pendiente");
-                DataPaquete paqueteDatos = new DataPaquete("reserva","crear",reservaCreada);
-
-
-                ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
-                flujoSalida.writeObject(paqueteDatos);
-                flujoSalida.flush();
-
-
-                ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
-                Response response = (Response) flujoEntrada.readObject();
-                ArrayList<Reserva> reservasRecibidas = (ArrayList<Reserva>) response.getObjetoRespuesta();
-
-                flujoSalida.close();
-                flujoEntrada.close();
-                socket.close();
-
-                if(response.getMensaje().equalsIgnoreCase("guardado")){
-                    new Alert(Alert.AlertType.CONFIRMATION,"Reserva agregada con éxito").showAndWait();
-                    updateListReservas();
+                if(fechaPlanificada.isAfter(paqueteSeleccionado.getFechaLimite())||fechaPlanificada.isBefore(paqueteSeleccionado.getFechaLimite())){
+                    new Alert(Alert.AlertType.ERROR,"Verifique la fecha planificada de acuerdo a la fecha limite del paquete",ButtonType.OK).showAndWait();
                 }else{
-                    throw new RegistroExistenteException();
+
+                    Reserva reservaCreada = new Reserva(LocalDate.now(),fechaPlanificada,LoginController.clienteLogeado,Integer.parseInt(cantidadPersonas),paqueteSeleccionado,new Guia(guiaSeleccionado,"9988",null,7),"pendiente");
+                    DataPaquete paqueteDatos = new DataPaquete("reserva","crear",reservaCreada);
+
+
+                    ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
+                    flujoSalida.writeObject(paqueteDatos);
+                    flujoSalida.flush();
+
+
+                    ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
+                    Response response = (Response) flujoEntrada.readObject();
+                    ArrayList<Reserva> reservasRecibidas = (ArrayList<Reserva>) response.getObjetoRespuesta();
+
+                    flujoSalida.close();
+                    flujoEntrada.close();
+                    socket.close();
+
+                    if(response.getMensaje().equalsIgnoreCase("guardado")){
+                        new Alert(Alert.AlertType.CONFIRMATION,"Reserva agregada con éxito").showAndWait();
+                        updateListReservas();
+                    }else{
+                        throw new RegistroExistenteException();
+                    }
                 }
+
+
             }
 
 
