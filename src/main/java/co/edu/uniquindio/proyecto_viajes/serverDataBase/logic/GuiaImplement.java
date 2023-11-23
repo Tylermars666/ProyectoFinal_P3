@@ -82,7 +82,39 @@ public class GuiaImplement implements CRUD{
 
     @Override
     public Object editar(Object objeto) {
-        return false;
+
+        Response response = null;
+        ArrayList<Guia> listaGuias = null;
+
+        try{
+
+            ArrayList<Object> idViejoGuiaNuevo = (ArrayList<Object>) objeto;
+            String idViejo = (String) idViejoGuiaNuevo.get(0);
+            Guia guiaNuevo = (Guia) idViejoGuiaNuevo.get(1);
+
+            int indexGuiaViejo = match(idViejo);
+            ObjectInputStream objetoListado = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/guias/listaGuias"));
+            listaGuias = (ArrayList<Guia>) objetoListado.readObject();
+            listaGuias.remove(indexGuiaViejo);
+            listaGuias.add(guiaNuevo);
+            objetoListado.close();
+            ObjectOutputStream listaGuiasParaGuardar = new ObjectOutputStream(new FileOutputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/guias/listaGuias"));
+            listaGuiasParaGuardar.writeObject(listaGuias);
+            listaGuiasParaGuardar.flush();
+            listaGuiasParaGuardar.close();
+
+            response = new Response("editado",listaGuias);
+
+            return response;
+
+
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+
+
+
+        return response;
     }
 
     @Override
@@ -141,6 +173,30 @@ public class GuiaImplement implements CRUD{
             for(Guia guiaPersistido: listaGuias){
 
                 if(guiaPersistido.getIdentificacion().equalsIgnoreCase(guia.getIdentificacion())){
+                    return listaGuias.indexOf(guiaPersistido);
+                }
+
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return -1;
+
+    }
+
+    public int match(String identificacion){
+        try{
+
+            ObjectInputStream objeto = new ObjectInputStream(new FileInputStream("src/main/java/co/edu/uniquindio/proyecto_viajes/serverDataBase/files/guias/listaGuias"));
+            ArrayList<Guia> listaGuias = (ArrayList<Guia>) objeto.readObject();
+
+            for(Guia guiaPersistido: listaGuias){
+
+                if(guiaPersistido.getIdentificacion().equalsIgnoreCase(identificacion)){
                     return listaGuias.indexOf(guiaPersistido);
                 }
 
